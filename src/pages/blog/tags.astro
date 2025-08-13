@@ -1,0 +1,241 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+---
+
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <BaseHead
+            title={`标签 | ${SITE_TITLE}`}
+            description={SITE_DESCRIPTION}
+        />
+    </head>
+    <body>
+        <Header />
+        <main class="container mx-auto px-4 py-12">
+            <div class="max-w-4xl mx-auto">
+                <h1
+                    class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100"
+                >
+                    标签云
+                </h1>
+                <p class="text-lg mb-8 text-gray-700 dark:text-gray-300">
+                    所有文章的标签集合，点击标签可以查看相关文章。
+                </p>
+
+                <div class="flex flex-wrap gap-3 mb-10">
+                    <a
+                        href="/blog/tags/javascript"
+                        class="px-4 py-2 text-lg bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        JavaScript (45)
+                    </a>
+                    <a
+                        href="/blog/tags/react"
+                        class="px-4 py-2 text-lg bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        React (32)
+                    </a>
+                    <a
+                        href="/blog/tags/vue"
+                        class="px-4 py-2 text-md bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        Vue (28)
+                    </a>
+                    <a
+                        href="/blog/tags/css"
+                        class="px-4 py-2 text-md bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        CSS (25)
+                    </a>
+                    <a
+                        href="/blog/tags/typescript"
+                        class="px-4 py-2 text-lg bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        TypeScript (22)
+                    </a>
+                    <a
+                        href="/blog/tags/node"
+                        class="px-3 py-1.5 text-sm bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        Node.js (18)
+                    </a>
+                    <a
+                        href="/blog/tags/git"
+                        class="px-3 py-1.5 text-sm bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        Git (15)
+                    </a>
+                    <a
+                        href="/blog/tags/performance"
+                        class="px-3 py-1.5 text-sm bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        Performance (12)
+                    </a>
+                    <a
+                        href="/blog/tags/tailwind"
+                        class="px-3 py-1.5 text-sm bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        Tailwind CSS (10)
+                    </a>
+                    <a
+                        href="/blog/tags/astro"
+                        class="px-3 py-1.5 text-md bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        Astro (10)
+                    </a>
+                    <a
+                        href="/blog/tags/design-patterns"
+                        class="px-3 py-1.5 text-sm bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        设计模式 (9)
+                    </a>
+                    <a
+                        href="/blog/tags/algorithms"
+                        class="px-3 py-1.5 text-sm bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        算法 (8)
+                    </a>
+                    <a
+                        href="/blog/tags/graphql"
+                        class="px-3 py-1.5 text-xs bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        GraphQL (7)
+                    </a>
+                    <a
+                        href="/blog/tags/docker"
+                        class="px-3 py-1.5 text-xs bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        Docker (7)
+                    </a>
+                    <a
+                        href="/blog/tags/testing"
+                        class="px-3 py-1.5 text-xs bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        测试 (6)
+                    </a>
+                    <a
+                        href="/blog/tags/next-js"
+                        class="px-3 py-1.5 text-xs bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        Next.js (6)
+                    </a>
+                    <a
+                        href="/blog/tags/accessibility"
+                        class="px-3 py-1.5 text-xs bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        无障碍 (5)
+                    </a>
+                    <a
+                        href="/blog/tags/animation"
+                        class="px-3 py-1.5 text-xs bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        动画 (5)
+                    </a>
+                    <a
+                        href="/blog/tags/security"
+                        class="px-3 py-1.5 text-xs bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        安全 (4)
+                    </a>
+                    <a
+                        href="/blog/tags/responsive"
+                        class="px-3 py-1.5 text-xs bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        响应式设计 (4)
+                    </a>
+                    <a
+                        href="/blog/tags/tools"
+                        class="px-3 py-1.5 text-xs bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        工具 (4)
+                    </a>
+                </div>
+
+                <h2
+                    class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100"
+                >
+                    最近使用的标签
+                </h2>
+
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                    <h3
+                        class="text-xl font-bold mb-4 text-gray-900 dark:text-white"
+                    >
+                        JavaScript
+                    </h3>
+
+                    <div class="space-y-4">
+                        <div
+                            class="border-b border-gray-200 dark:border-gray-700 pb-4"
+                        >
+                            <a
+                                href="/blog/javascript-best-practices"
+                                class="text-lg font-medium hover:text-blue-500 text-gray-900 dark:text-white"
+                            >
+                                JavaScript最佳实践：提高代码质量的20个技巧
+                            </a>
+                            <p class="text-gray-600 dark:text-gray-300 mt-1">
+                                2025年7月12日
+                            </p>
+                        </div>
+
+                        <div
+                            class="border-b border-gray-200 dark:border-gray-700 pb-4"
+                        >
+                            <a
+                                href="/blog/javascript-async-patterns"
+                                class="text-lg font-medium hover:text-blue-500 text-gray-900 dark:text-white"
+                            >
+                                JavaScript异步编程模式：从回调到Async/Await
+                            </a>
+                            <p class="text-gray-600 dark:text-gray-300 mt-1">
+                                2025年6月28日
+                            </p>
+                        </div>
+
+                        <div
+                            class="border-b border-gray-200 dark:border-gray-700 pb-4"
+                        >
+                            <a
+                                href="/blog/javascript-performance-tips"
+                                class="text-lg font-medium hover:text-blue-500 text-gray-900 dark:text-white"
+                            >
+                                提升JavaScript性能的10个小技巧
+                            </a>
+                            <p class="text-gray-600 dark:text-gray-300 mt-1">
+                                2025年6月15日
+                            </p>
+                        </div>
+
+                        <div>
+                            <a
+                                href="/blog/javascript-frameworks-comparison"
+                                class="text-lg font-medium hover:text-blue-500 text-gray-900 dark:text-white"
+                            >
+                                2025年JavaScript框架对比：React vs Vue vs
+                                Angular vs Svelte
+                            </a>
+                            <p class="text-gray-600 dark:text-gray-300 mt-1">
+                                2025年5月30日
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <a
+                            href="/blog/tags/javascript"
+                            class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300"
+                        >
+                            查看所有JavaScript文章 →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <Footer />
+    </body>
+</html>

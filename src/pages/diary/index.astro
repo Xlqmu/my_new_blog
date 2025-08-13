@@ -1,0 +1,221 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+---
+
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <BaseHead
+            title={`日记 | ${SITE_TITLE}`}
+            description={SITE_DESCRIPTION}
+        />
+    </head>
+    <body>
+        <Header />
+        <main class="container mx-auto px-4 py-12">
+            <div class="max-w-4xl mx-auto">
+                <h1
+                    class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100"
+                >
+                    日记
+                </h1>
+                <p class="text-lg mb-8 text-gray-700 dark:text-gray-300">
+                    这里记录我的日常想法、学习和生活点滴。
+                </p>
+
+                <!-- 日记分类标签 -->
+                <div class="flex flex-wrap gap-3 mb-8">
+                    <a
+                        href="/diary/timeline"
+                        class="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        时间线
+                    </a>
+                    <a
+                        href="/diary/daily"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                    >
+                        每日
+                    </a>
+                    <a
+                        href="/diary/weekly"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                    >
+                        每周
+                    </a>
+                    <a
+                        href="/diary/monthly"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                    >
+                        每月
+                    </a>
+                    <a
+                        href="/diary/annual"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                    >
+                        年度
+                    </a>
+                </div>
+
+                <!-- 时间线视图 (默认) -->
+                <div class="space-y-8">
+                    <!-- 时间线项目 -->
+                    <div
+                        class="relative pl-8 pb-8 border-l-2 border-blue-500 dark:border-blue-400"
+                    >
+                        <div
+                            class="absolute left-[-8px] bg-blue-500 dark:bg-blue-400 w-4 h-4 rounded-full"
+                        >
+                        </div>
+                        <div
+                            class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md"
+                        >
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="text-xl font-bold dark:text-white">
+                                    周末咖啡馆发现
+                                </h3>
+                                <span
+                                    class="text-sm text-gray-500 dark:text-gray-400"
+                                    >2025年8月10日</span
+                                >
+                            </div>
+                            <p class="text-gray-700 dark:text-gray-300 mb-4">
+                                今天在市中心发现了一家新开的咖啡馆，装修风格很复古，咖啡豆是自己烘焙的，喝了一杯埃塞俄比亚的单品，酸甜平衡，有明显的蓝莓和柑橘风味。
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
+                                    >咖啡</span
+                                >
+                                <span
+                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
+                                    >周末</span
+                                >
+                                <span
+                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
+                                    >发现</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="relative pl-8 pb-8 border-l-2 border-blue-500 dark:border-blue-400"
+                    >
+                        <div
+                            class="absolute left-[-8px] bg-blue-500 dark:bg-blue-400 w-4 h-4 rounded-full"
+                        >
+                        </div>
+                        <div
+                            class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md"
+                        >
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="text-xl font-bold dark:text-white">
+                                    React 18新特性学习
+                                </h3>
+                                <span
+                                    class="text-sm text-gray-500 dark:text-gray-400"
+                                    >2025年8月8日</span
+                                >
+                            </div>
+                            <p class="text-gray-700 dark:text-gray-300 mb-4">
+                                今天深入研究了React 18的Concurrent
+                                Mode和Suspense组件，这些新特性对于优化应用性能和用户体验确实有很大帮助。尤其是Suspense的数据获取模式，可以让组件树的渲染变得更加平滑。
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
+                                    >React</span
+                                >
+                                <span
+                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
+                                    >前端</span
+                                >
+                                <span
+                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
+                                    >学习</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="relative pl-8 pb-8 border-l-2 border-blue-500 dark:border-blue-400"
+                    >
+                        <div
+                            class="absolute left-[-8px] bg-blue-500 dark:bg-blue-400 w-4 h-4 rounded-full"
+                        >
+                        </div>
+                        <div
+                            class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md"
+                        >
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="text-xl font-bold dark:text-white">
+                                    个人博客改版计划
+                                </h3>
+                                <span
+                                    class="text-sm text-gray-500 dark:text-gray-400"
+                                    >2025年8月5日</span
+                                >
+                            </div>
+                            <p class="text-gray-700 dark:text-gray-300 mb-4">
+                                计划在这个月内将个人博客从Gatsby迁移到Astro，主要是因为Astro的性能更好，对静态内容的处理更加高效。今天开始整理内容和规划新的页面布局。
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
+                                    >博客</span
+                                >
+                                <span
+                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
+                                    >Astro</span
+                                >
+                                <span
+                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
+                                    >计划</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 分页 -->
+                <div class="flex justify-center items-center space-x-2 mt-12">
+                    <a
+                        href="#"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >上一页</a
+                    >
+                    <span class="px-4 py-2 bg-blue-500 text-white rounded"
+                        >1</span
+                    >
+                    <a
+                        href="#"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >2</a
+                    >
+                    <a
+                        href="#"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >3</a
+                    >
+                    <span class="px-2">...</span>
+                    <a
+                        href="#"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >10</a
+                    >
+                    <a
+                        href="#"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >下一页</a
+                    >
+                </div>
+            </div>
+        </main>
+        <Footer />
+    </body>
+</html>

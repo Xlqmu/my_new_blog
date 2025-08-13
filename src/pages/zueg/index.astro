@@ -1,0 +1,301 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+---
+
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <BaseHead
+            title={`随笔 | ${SITE_TITLE}`}
+            description={SITE_DESCRIPTION}
+        />
+    </head>
+    <body>
+        <Header />
+        <main class="container mx-auto px-4 py-12">
+            <div class="max-w-4xl mx-auto">
+                <h1
+                    class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100"
+                >
+                    随笔
+                </h1>
+                <p class="text-lg mb-8 text-gray-700 dark:text-gray-300">
+                    这里记录我对技术、生活和其他领域的思考和见解。
+                </p>
+
+                <!-- 分类标签 -->
+                <div class="flex flex-wrap gap-3 mb-8">
+                    <a
+                        href="/zueg/software"
+                        class="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    >
+                        <span class="flex items-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4 mr-1"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                ></path>
+                            </svg>
+                            软件
+                        </span>
+                    </a>
+                    <a
+                        href="/zueg/hardware"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                    >
+                        <span class="flex items-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4 mr-1"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
+                                ></path>
+                            </svg>
+                            硬件
+                        </span>
+                    </a>
+                    <a
+                        href="/zueg/website"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                    >
+                        <span class="flex items-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4 mr-1"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                                ></path>
+                            </svg>
+                            网站
+                        </span>
+                    </a>
+                    <a
+                        href="/zueg/algorithm"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                    >
+                        <span class="flex items-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4 mr-1"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4.871 4A17.926 17.926 0 003 12c0 2.874.673 5.59 1.871 8m14.13 0a17.926 17.926 0 001.87-8c0-2.874-.673-5.59-1.87-8M9 9h1.246a1 1 0 01.961.725l1.586 5.55a1 1 0 00.961.725H15m1-7h-.08a2 2 0 00-1.519.698L9.6 15.302A2 2 0 018.08 16H8"
+                                ></path>
+                            </svg>
+                            算法
+                        </span>
+                    </a>
+                </div>
+
+                <!-- 随笔文章网格 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- 文章卡片 -->
+                    <div
+                        class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition"
+                    >
+                        <a href="/zueg/tauri-upgrade">
+                            <img
+                                src="/path/to/tauri-image.jpg"
+                                alt="Tauri V2"
+                                class="w-full h-48 object-cover"
+                            />
+                            <div class="p-5">
+                                <div
+                                    class="flex justify-between items-center mb-2"
+                                >
+                                    <span
+                                        class="text-sm text-blue-500 font-medium"
+                                        >软件</span
+                                    >
+                                    <span
+                                        class="text-sm text-gray-500 dark:text-gray-400"
+                                        >2025年4月30日</span
+                                    >
+                                </div>
+                                <h3
+                                    class="text-xl font-bold mb-2 text-gray-900 dark:text-white"
+                                >
+                                    将TauriV1项目升级到V2
+                                </h3>
+                                <p class="text-gray-700 dark:text-gray-300">
+                                    最近涉及项目的交接和使用，是时候升级TauriV2版本...
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- 文章卡片 -->
+                    <div
+                        class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition"
+                    >
+                        <a href="/zueg/git-force-push">
+                            <img
+                                src="/path/to/git-image.jpg"
+                                alt="Git Force Push"
+                                class="w-full h-48 object-cover"
+                            />
+                            <div class="p-5">
+                                <div
+                                    class="flex justify-between items-center mb-2"
+                                >
+                                    <span
+                                        class="text-sm text-blue-500 font-medium"
+                                        >软件</span
+                                    >
+                                    <span
+                                        class="text-sm text-gray-500 dark:text-gray-400"
+                                        >2025年3月14日</span
+                                    >
+                                </div>
+                                <h3
+                                    class="text-xl font-bold mb-2 text-gray-900 dark:text-white"
+                                >
+                                    git中通过ForcePush避免Merge记录
+                                </h3>
+                                <p class="text-gray-700 dark:text-gray-300">
+                                    昨天迷糊地又推了一个版本号...为了避免线上百个纯粹的commit里面插入一个无用的merge记录...
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- 文章卡片 -->
+                    <div
+                        class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition"
+                    >
+                        <a href="/zueg/vue-3-composition-api">
+                            <img
+                                src="/path/to/vue-image.jpg"
+                                alt="Vue 3 Composition API"
+                                class="w-full h-48 object-cover"
+                            />
+                            <div class="p-5">
+                                <div
+                                    class="flex justify-between items-center mb-2"
+                                >
+                                    <span
+                                        class="text-sm text-blue-500 font-medium"
+                                        >网站</span
+                                    >
+                                    <span
+                                        class="text-sm text-gray-500 dark:text-gray-400"
+                                        >2025年3月2日</span
+                                    >
+                                </div>
+                                <h3
+                                    class="text-xl font-bold mb-2 text-gray-900 dark:text-white"
+                                >
+                                    Vue 3 Composition API使用体验
+                                </h3>
+                                <p class="text-gray-700 dark:text-gray-300">
+                                    最近在项目中全面使用Vue 3的Composition
+                                    API，这里分享一些经验和技巧...
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- 文章卡片 -->
+                    <div
+                        class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition"
+                    >
+                        <a href="/zueg/raspberry-pi-home-server">
+                            <img
+                                src="/path/to/raspberry-image.jpg"
+                                alt="Raspberry Pi Home Server"
+                                class="w-full h-48 object-cover"
+                            />
+                            <div class="p-5">
+                                <div
+                                    class="flex justify-between items-center mb-2"
+                                >
+                                    <span
+                                        class="text-sm text-blue-500 font-medium"
+                                        >硬件</span
+                                    >
+                                    <span
+                                        class="text-sm text-gray-500 dark:text-gray-400"
+                                        >2025年2月15日</span
+                                    >
+                                </div>
+                                <h3
+                                    class="text-xl font-bold mb-2 text-gray-900 dark:text-white"
+                                >
+                                    使用树莓派搭建家庭服务器
+                                </h3>
+                                <p class="text-gray-700 dark:text-gray-300">
+                                    介绍如何用树莓派4B搭建功能齐全的家庭服务器，包括NAS、媒体中心和自动备份系统...
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 分页 -->
+                <div class="flex justify-center items-center space-x-2 mt-12">
+                    <a
+                        href="#"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >上一页</a
+                    >
+                    <span class="px-4 py-2 bg-blue-500 text-white rounded"
+                        >1</span
+                    >
+                    <a
+                        href="#"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >2</a
+                    >
+                    <a
+                        href="#"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >3</a
+                    >
+                    <span class="px-2">...</span>
+                    <a
+                        href="#"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >10</a
+                    >
+                    <a
+                        href="#"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >下一页</a
+                    >
+                </div>
+            </div>
+        </main>
+        <Footer />
+    </body>
+</html>

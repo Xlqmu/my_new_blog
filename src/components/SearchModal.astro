@@ -1,0 +1,201 @@
+---
+// 搜索模态框组件
+---
+
+<div
+    id="search-modal"
+    class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center hidden"
+>
+    <div
+        class="bg-white dark:bg-gray-800 w-full max-w-2xl mx-4 rounded-lg overflow-hidden"
+    >
+        <div
+            class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center"
+        >
+            <h3 class="text-lg font-bold dark:text-white">搜索内容</h3>
+            <button
+                id="close-search"
+                class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="p-4">
+            <div class="relative mb-4">
+                <div
+                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 text-gray-400"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        ></path>
+                    </svg>
+                </div>
+                <input
+                    type="text"
+                    id="search-input"
+                    class="w-full pl-10 pr-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="输入关键词搜索..."
+                    autocomplete="off"
+                />
+            </div>
+            <div id="search-results" class="max-h-96 overflow-y-auto mt-4">
+                <!-- 搜索结果将在这里显示 -->
+                <div class="p-4 text-center text-gray-500 dark:text-gray-400">
+                    开始输入以搜索文章和页面
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // 初始化搜索模态框
+        const searchToggle = document.getElementById("search-toggle");
+        const searchModal = document.getElementById("search-modal");
+        const closeSearch = document.getElementById("close-search");
+        const searchInput = document.getElementById(
+            "search-input",
+        ) as HTMLInputElement;
+        const searchResults = document.getElementById("search-results");
+
+        if (
+            searchToggle &&
+            searchModal &&
+            closeSearch &&
+            searchInput &&
+            searchResults
+        ) {
+            // 打开搜索模态框
+            searchToggle.addEventListener("click", () => {
+                searchModal.classList.remove("hidden");
+                searchInput.focus();
+                // 阻止滚动
+                document.body.style.overflow = "hidden";
+            });
+
+            // 关闭搜索模态框
+            closeSearch.addEventListener("click", () => {
+                searchModal.classList.add("hidden");
+                // 恢复滚动
+                document.body.style.overflow = "";
+            });
+
+            // 点击模态框外部关闭
+            searchModal.addEventListener("click", (e) => {
+                if (e.target === searchModal) {
+                    searchModal.classList.add("hidden");
+                    document.body.style.overflow = "";
+                }
+            });
+
+            // ESC键关闭
+            document.addEventListener("keydown", (e) => {
+                if (
+                    e.key === "Escape" &&
+                    !searchModal.classList.contains("hidden")
+                ) {
+                    searchModal.classList.add("hidden");
+                    document.body.style.overflow = "";
+                }
+            });
+
+            // 搜索功能
+            searchInput.addEventListener(
+                "input",
+                debounce(() => {
+                    const query = searchInput.value.trim().toLowerCase();
+                    if (query.length < 2) {
+                        searchResults.innerHTML = `<div class="p-4 text-center text-gray-500 dark:text-gray-400">请输入至少2个字符</div>`;
+                        return;
+                    }
+
+                    // 模拟搜索结果 (这里应该替换为真实的搜索逻辑)
+                    searchResults.innerHTML = `<div class="p-2 text-gray-500 dark:text-gray-400">搜索中...</div>`;
+
+                    // 模拟API调用延迟
+                    setTimeout(() => {
+                        // 这里应该是真实的搜索逻辑，根据query查询内容
+                        const mockResults = [
+                            {
+                                title: "将TauriV1项目升级到V2",
+                                url: "/blog/tauri-upgrade",
+                                date: "2025-04-30",
+                                excerpt:
+                                    "最近涉及项目的交接和使用，是时候升级TauriV2版本",
+                            },
+                            {
+                                title: "git中通过ForcePush避免Merge记录",
+                                url: "/blog/git-force-push",
+                                date: "2025-03-14",
+                                excerpt:
+                                    "昨天迷糊地又推了一个版本号...为了避免线上百个纯粹的commit里面插入一个无用的merge记录",
+                            },
+                            {
+                                title: "使用Astro构建个人博客",
+                                url: "/blog/astro-blog",
+                                date: "2025-02-20",
+                                excerpt:
+                                    "介绍如何使用Astro框架构建一个高性能的个人博客网站",
+                            },
+                        ].filter(
+                            (item) =>
+                                item.title.toLowerCase().includes(query) ||
+                                item.excerpt.toLowerCase().includes(query),
+                        );
+
+                        if (mockResults.length === 0) {
+                            searchResults.innerHTML = `<div class="p-4 text-center text-gray-500 dark:text-gray-400">没有找到匹配"${query}"的结果</div>`;
+                        } else {
+                            let html = "";
+                            mockResults.forEach((result) => {
+                                html += `
+                                <a href="${result.url}" class="block p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+                                    <h4 class="text-lg font-medium text-gray-900 dark:text-white">${result.title}</h4>
+                                    <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">${result.date}</div>
+                                    <p class="text-gray-700 dark:text-gray-300">${result.excerpt}</p>
+                                </a>
+                            `;
+                            });
+                            searchResults.innerHTML = html;
+                        }
+                    }, 300);
+                }, 300),
+            );
+        }
+    });
+
+    // 防抖函数
+    function debounce(func: Function, wait: number) {
+        let timeout: number | null = null;
+        return function (this: any, ...args: any[]) {
+            const context = this;
+            if (timeout) clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                func.apply(context, args);
+            }, wait) as unknown as number;
+        };
+    }
+</script>

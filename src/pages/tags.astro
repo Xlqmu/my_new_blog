@@ -1,0 +1,153 @@
+---
+import { getCollection } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { SITE_DESCRIPTION } from "../consts";
+
+// 获取所有文章并提取标签
+const allPosts = await getCollection("blog");
+const allTags = [
+    ...new Set(allPosts.map((post) => post.data.tags || []).flat()),
+].sort();
+
+// 为每个标签创建对应的文章列表
+const tagMap: Record<string, typeof allPosts> = allTags.reduce(
+    (acc: Record<string, typeof allPosts>, tag: string) => {
+        acc[tag] = allPosts.filter((post) => post.data.tags?.includes(tag));
+        return acc;
+    },
+    {},
+);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <BaseHead title="文章标签" description={SITE_DESCRIPTION} />
+    </head>
+    <body>
+        <Header />
+
+        <main>
+            <section class="tags-hero py-16 text-center">
+                <div class="container mx-auto px-4">
+                    <h1 class="text-4xl font-bold mb-4">文章标签</h1>
+                    <p class="text-xl max-w-2xl mx-auto text-gray-600">
+                        按标签浏览所有文章
+                    </p>
+                </div>
+            </section>
+
+            <section class="tags-content py-10">
+                <div class="container mx-auto px-4">
+                    {/* 显示所有标签 */}
+                    <div
+                        class="all-tags flex flex-wrap gap-3 justify-center mb-12"
+                    >
+                        {
+                            allTags.map((tag) => (
+                                <a href={`#${tag}`} class="tag-link">
+                                    #{tag}
+                                </a>
+                            ))
+                        }
+                    </div>
+
+                    {/* 按标签显示文章 */}
+                    {
+                        allTags.length > 0 ? (
+                            <div class="tag-sections">
+                                {allTags.map((tag) => (
+                                    <div id={tag} class="tag-section mb-12">
+                                        <h2 class="text-2xl font-bold mb-6 py-2 border-b border-gray-200">
+                                            #{tag}
+                                        </h2>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            {tagMap[tag].map((post) => (
+                                                <article class="post-card">
+                                                    <a
+                                                        href={`/blog/${post.id}/`}
+                                                    >
+                                                        <h3 class="text-xl font-bold mb-2">
+                                                            {post.data.title}
+                                                        </h3>
+                                                    </a>
+                                                    <p class="text-gray-600 mb-3 text-sm">
+                                                        <time
+                                                            datetime={post.data.pubDate.toISOString()}
+                                                        >
+                                                            {post.data.pubDate.toLocaleDateString(
+                                                                "zh-CN",
+                                                                {
+                                                                    year: "numeric",
+                                                                    month: "long",
+                                                                    day: "numeric",
+                                                                },
+                                                            )}
+                                                        </time>
+                                                    </p>
+                                                    <p class="text-gray-700">
+                                                        {post.data.description}
+                                                    </p>
+                                                </article>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div class="text-center py-12">
+                                <p class="text-xl text-gray-600">
+                                    暂无标签，请先为文章添加标签。
+                                </p>
+                            </div>
+                        )
+                    }
+                </div>
+            </section>
+        </main>
+
+        <Footer />
+
+        <style>
+            .tags-hero {
+                background: linear-gradient(
+                    to bottom,
+                    rgba(var(--gray-light), 0.8),
+                    rgba(255, 255, 255, 0.8)
+                );
+                padding: 5rem 0;
+            }
+            .tag-link {
+                background-color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 2rem;
+                font-size: 0.9rem;
+                color: var(--accent);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s;
+                text-decoration: none;
+            }
+            .tag-link:hover {
+                background-color: var(--accent);
+                color: white;
+                transform: translateY(-2px);
+            }
+            .post-card {
+                background-color: white;
+                padding: 1.5rem;
+                border-radius: 0.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s;
+            }
+            .post-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+            }
+            .tag-section:target {
+                scroll-margin-top: 100px;
+            }
+        </style>
+    </body>
+</html>

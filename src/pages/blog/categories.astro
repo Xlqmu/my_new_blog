@@ -1,0 +1,229 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+---
+
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <BaseHead
+            title={`分类 | ${SITE_TITLE}`}
+            description={SITE_DESCRIPTION}
+        />
+    </head>
+    <body>
+        <Header />
+        <main class="container mx-auto px-4 py-12">
+            <div class="max-w-4xl mx-auto">
+                <h1
+                    class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100"
+                >
+                    博客分类
+                </h1>
+                <p class="text-lg mb-8 text-gray-700 dark:text-gray-300">
+                    浏览不同主题的文章。
+                </p>
+
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+                >
+                    <!-- 分类卡片 -->
+                    <a
+                        href="/blog/categories/programming"
+                        class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center"
+                    >
+                        <div
+                            class="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mb-4"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-8 w-8 text-blue-500"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                                ></path>
+                            </svg>
+                        </div>
+                        <h2
+                            class="text-xl font-bold mb-2 text-center text-gray-900 dark:text-white"
+                        >
+                            编程
+                        </h2>
+                        <p class="text-gray-600 dark:text-gray-300 text-center">
+                            42 篇文章
+                        </p>
+                    </a>
+
+                    <a
+                        href="/blog/categories/web-development"
+                        class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center"
+                    >
+                        <div
+                            class="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mb-4"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-8 w-8 text-green-500"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                                ></path>
+                            </svg>
+                        </div>
+                        <h2
+                            class="text-xl font-bold mb-2 text-center text-gray-900 dark:text-white"
+                        >
+                            Web 开发
+                        </h2>
+                        <p class="text-gray-600 dark:text-gray-300 text-center">
+                            28 篇文章
+                        </p>
+                    </a>
+
+                    <a
+                        href="/blog/categories/tools"
+                        class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center"
+                    >
+                        <div
+                            class="w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center mb-4"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-8 w-8 text-purple-500"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"
+                                ></path>
+                            </svg>
+                        </div>
+                        <h2
+                            class="text-xl font-bold mb-2 text-center text-gray-900 dark:text-white"
+                        >
+                            工具
+                        </h2>
+                        <p class="text-gray-600 dark:text-gray-300 text-center">
+                            15 篇文章
+                        </p>
+                    </a>
+
+                    <a
+                        href="/blog/categories/design"
+                        class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center"
+                    >
+                        <div
+                            class="w-16 h-16 rounded-full bg-pink-100 dark:bg-pink-900 flex items-center justify-center mb-4"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-8 w-8 text-pink-500"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                                ></path>
+                            </svg>
+                        </div>
+                        <h2
+                            class="text-xl font-bold mb-2 text-center text-gray-900 dark:text-white"
+                        >
+                            设计
+                        </h2>
+                        <p class="text-gray-600 dark:text-gray-300 text-center">
+                            12 篇文章
+                        </p>
+                    </a>
+
+                    <a
+                        href="/blog/categories/tutorial"
+                        class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center"
+                    >
+                        <div
+                            class="w-16 h-16 rounded-full bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center mb-4"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-8 w-8 text-yellow-500"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                                ></path>
+                            </svg>
+                        </div>
+                        <h2
+                            class="text-xl font-bold mb-2 text-center text-gray-900 dark:text-white"
+                        >
+                            教程
+                        </h2>
+                        <p class="text-gray-600 dark:text-gray-300 text-center">
+                            20 篇文章
+                        </p>
+                    </a>
+
+                    <a
+                        href="/blog/categories/thoughts"
+                        class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center"
+                    >
+                        <div
+                            class="w-16 h-16 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center mb-4"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-8 w-8 text-red-500"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                                ></path>
+                            </svg>
+                        </div>
+                        <h2
+                            class="text-xl font-bold mb-2 text-center text-gray-900 dark:text-white"
+                        >
+                            随想
+                        </h2>
+                        <p class="text-gray-600 dark:text-gray-300 text-center">
+                            18 篇文章
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </main>
+        <Footer />
+    </body>
+</html>

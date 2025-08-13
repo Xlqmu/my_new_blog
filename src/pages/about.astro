@@ -1,63 +1,181 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import AboutHeroImage from "../assets/blog-placeholder-about.jpg";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { SITE_DESCRIPTION } from "../consts";
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title="关于我" description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+		<main>
+			<section class="about-hero py-16 text-center">
+				<div class="container mx-auto px-4">
+					<div class="avatar mb-8">
+						<img
+							src={AboutHeroImage.src}
+							alt="头像"
+							class="rounded-full w-32 h-32 object-cover mx-auto border-4 border-white shadow-lg"
+						/>
+					</div>
+					<h1 class="text-4xl font-bold mb-4">关于我</h1>
+					<p class="text-xl max-w-2xl mx-auto text-gray-600">
+						将缠绕在这世界上的话语，于追寻中寻觅中编织出来
+					</p>
+				</div>
+			</section>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+			<section class="about-content py-10">
+				<div class="container mx-auto px-4">
+					<div class="prose max-w-3xl mx-auto">
+						<h2>个人简介</h2>
+						<p>
+							你好，欢迎来到我的个人博客！我是一名热爱技术的开发者，对编程和设计充满热情。创建这个博客是为了分享我在技术探索中的经验、想法和学习心得。
+						</p>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+						<h2>专业技能</h2>
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+							<div class="skill-category">
+								<h3>前端开发</h3>
+								<ul>
+									<li>HTML/CSS/JavaScript</li>
+									<li>TypeScript</li>
+									<li>React/Vue</li>
+									<li>TailwindCSS</li>
+									<li>Astro 框架</li>
+								</ul>
+							</div>
+							<div class="skill-category">
+								<h3>后端开发</h3>
+								<ul>
+									<li>Node.js</li>
+									<li>Python</li>
+									<li>数据库设计</li>
+									<li>API 开发</li>
+								</ul>
+							</div>
+						</div>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+						<h2>工作经历</h2>
+						<div class="timeline my-6">
+							<div class="timeline-item mb-8">
+								<div class="timeline-date font-bold">
+									2022 - 至今
+								</div>
+								<div class="timeline-content">
+									<h3>全栈开发工程师</h3>
+									<p>公司名称</p>
+									<p>
+										负责公司产品的前端和后端开发，使用
+										React, Node.js 和 TypeScript
+										技术栈，参与项目从设计到部署的全流程。
+									</p>
+								</div>
+							</div>
+							<div class="timeline-item">
+								<div class="timeline-date font-bold">
+									2018 - 2022
+								</div>
+								<div class="timeline-content">
+									<h3>前端开发工程师</h3>
+									<p>公司名称</p>
+									<p>
+										主要负责公司网站和应用程序的前端开发，使用
+										Vue.js 和 JavaScript
+										实现用户界面和交互功能。
+									</p>
+								</div>
+							</div>
+						</div>
+
+						<h2>兴趣爱好</h2>
+						<p>
+							除了编程，我还喜欢阅读技术书籍和科幻小说，热爱户外活动和摄影。业余时间也会参与开源项目和技术社区讨论，不断探索新技术和创意想法。
+						</p>
+
+						<h2>联系方式</h2>
+						<p>
+							如果你对我的博客内容有任何问题或建议，或者想要进行技术交流，欢迎通过以下方式联系我：
+						</p>
+						<ul class="contact-list">
+							<li>Email: your.email@example.com</li>
+							<li>
+								GitHub: <a
+									href="https://github.com/your-username"
+									target="_blank">@your-username</a>
+							</li>
+							<!-- 可以添加更多联系方式 -->
+						</ul>
+
+						<div class="my-8 text-center">
+							<p class="text-gray-600 italic">
+								感谢您访问我的博客！
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<Footer />
+
+		<style>
+			.about-hero {
+				background: linear-gradient(
+					to bottom,
+					rgba(var(--gray-light), 0.8),
+					rgba(255, 255, 255, 0.8)
+				);
+				padding: 6rem 0;
+			}
+			.prose h2 {
+				color: var(--accent-dark);
+				margin-top: 2rem;
+				margin-bottom: 1rem;
+				font-size: 1.75rem;
+			}
+			.prose h3 {
+				color: rgb(var(--gray-dark));
+				margin-top: 1.5rem;
+				margin-bottom: 0.75rem;
+				font-size: 1.5rem;
+			}
+			.prose p {
+				margin-bottom: 1.5rem;
+				line-height: 1.8;
+			}
+			.prose ul {
+				margin-bottom: 1.5rem;
+				padding-left: 1.5rem;
+				list-style-type: disc;
+			}
+			.prose li {
+				margin-bottom: 0.5rem;
+			}
+			.skill-category {
+				background-color: white;
+				padding: 1.5rem;
+				border-radius: 0.5rem;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			}
+			.timeline-item {
+				position: relative;
+				padding-left: 2rem;
+				border-left: 2px solid var(--accent);
+			}
+			.timeline-date {
+				margin-bottom: 0.5rem;
+				color: var(--accent-dark);
+			}
+			.contact-list li {
+				margin-bottom: 0.75rem;
+			}
+		</style>
+	</body>
+</html>

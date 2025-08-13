@@ -1,85 +1,761 @@
 ---
-import { SITE_TITLE } from '../consts';
-import HeaderLink from './HeaderLink.astro';
+import { SITE_TITLE } from "../consts";
+import HeaderLink from "./HeaderLink.astro";
+import SearchModal from "./SearchModal.astro";
 ---
 
-<header>
-	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
-		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/blog">Blog</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
-		</div>
-		<div class="social-links">
-			<a href="https://m.webtoo.ls/@astro" target="_blank">
-				<span class="sr-only">Follow Astro on Mastodon</span>
-				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
-					><path
-						fill="currentColor"
-						d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a3.614 3.614 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522c0-.859.22-1.541.66-2.046.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764.442.505.661 1.187.661 2.046v4.203z"
-					></path></svg
+<header
+	class="sticky top-0 z-50 anime-header bg-white dark:bg-dark-primary transition-colors duration-300"
+>
+	<div class="container mx-auto">
+		<nav
+			class="flex flex-wrap items-center justify-between py-3 px-4 relative"
+		>
+			<h1 class="text-xl font-bold anime-title">
+				<a href="/" class="site-title-link">
+					<img
+						src="https://cdn.hakochest.net/avatar.jpg"
+						alt="Logo"
+						class="inline-block w-8 h-8 rounded-full mr-2"
+					/>
+					{SITE_TITLE}
+				</a>
+			</h1>
+
+			<!-- 移动端菜单按钮 -->
+			<button
+				id="menu-toggle"
+				class="md:hidden anime-menu-btn"
+				aria-label="菜单"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke-width="1.5"
+					stroke="currentColor"
+					class="w-6 h-6"
 				>
-			</a>
-			<a href="https://twitter.com/astrodotbuild" target="_blank">
-				<span class="sr-only">Follow Astro on Twitter</span>
-				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
-					><path
-						fill="currentColor"
-						d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"
-					></path></svg
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+				</svg>
+			</button>
+
+			<!-- 导航链接 -->
+			<div
+				id="nav-links"
+				class="hidden md:flex w-full md:w-auto flex-col md:flex-row items-center mt-4 md:mt-0"
+			>
+				<div class="internal-links flex flex-col md:flex-row">
+					<HeaderLink href="/"> 首页 </HeaderLink>
+
+					<!-- Post 下拉菜单 -->
+					<div class="dropdown-container relative group">
+						<HeaderLink href="/blog" class="dropdown-toggle">
+							<span class="flex items-center">
+								博客
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 20 20"
+									fill="currentColor"
+									class="w-4 h-4 ml-1"
+								>
+									<path
+										fill-rule="evenodd"
+										d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+										clip-rule="evenodd"></path>
+								</svg>
+							</span>
+						</HeaderLink>
+						<div
+							class="dropdown-menu absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 hidden group-hover:block"
+						>
+							<a
+								href="/blog/archive"
+								class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<span class="flex items-center">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 mr-2"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+										></path>
+									</svg>
+									归档
+								</span>
+							</a>
+							<a
+								href="/blog"
+								class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<span class="flex items-center">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 mr-2"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+										></path>
+									</svg>
+									博客
+								</span>
+							</a>
+							<a
+								href="/blog/categories"
+								class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<span class="flex items-center">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 mr-2"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+										></path>
+									</svg>
+									分类
+								</span>
+							</a>
+							<a
+								href="/blog/tags"
+								class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<span class="flex items-center">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 mr-2"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+										></path>
+									</svg>
+									标签
+								</span>
+							</a>
+							<a
+								href="/blog/series"
+								class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<span class="flex items-center">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 mr-2"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+										></path>
+									</svg>
+									系列
+								</span>
+							</a>
+						</div>
+					</div>
+
+					<!-- Diary 下拉菜单 -->
+					<div class="dropdown-container relative group">
+						<HeaderLink href="/diary" class="dropdown-toggle">
+							<span class="flex items-center">
+								日记
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 20 20"
+									fill="currentColor"
+									class="w-4 h-4 ml-1"
+								>
+									<path
+										fill-rule="evenodd"
+										d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+										clip-rule="evenodd"></path>
+								</svg>
+							</span>
+						</HeaderLink>
+						<div
+							class="dropdown-menu absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 hidden group-hover:block"
+						>
+							<a
+								href="/diary/timeline"
+								class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<span class="flex items-center">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 mr-2"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+										></path>
+									</svg>
+									时间线
+								</span>
+							</a>
+							<a
+								href="/diary/daily"
+								class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<span class="flex items-center">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 mr-2"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+										></path>
+									</svg>
+									每日
+								</span>
+							</a>
+							<a
+								href="/diary/weekly"
+								class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<span class="flex items-center">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 mr-2"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+										></path>
+									</svg>
+									每周
+								</span>
+							</a>
+							<a
+								href="/diary/monthly"
+								class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<span class="flex items-center">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 mr-2"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+										></path>
+									</svg>
+									每月
+								</span>
+							</a>
+							<a
+								href="/diary/annual"
+								class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<span class="flex items-center">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 mr-2"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+										></path>
+									</svg>
+									年度
+								</span>
+							</a>
+						</div>
+					</div>
+
+					<!-- Zueg 下拉菜单 -->
+					<div class="dropdown-container relative group">
+						<HeaderLink href="/zueg" class="dropdown-toggle">
+							<span class="flex items-center">
+								随笔
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 20 20"
+									fill="currentColor"
+									class="w-4 h-4 ml-1"
+								>
+									<path
+										fill-rule="evenodd"
+										d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+										clip-rule="evenodd"></path>
+								</svg>
+							</span>
+						</HeaderLink>
+						<div
+							class="dropdown-menu absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 hidden group-hover:block"
+						>
+							<a
+								href="/zueg/software"
+								class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<span class="flex items-center">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 mr-2"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+										></path>
+									</svg>
+									软件
+								</span>
+							</a>
+							<a
+								href="/zueg/hardware"
+								class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<span class="flex items-center">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 mr-2"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
+										></path>
+									</svg>
+									硬件
+								</span>
+							</a>
+							<a
+								href="/zueg/website"
+								class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<span class="flex items-center">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 mr-2"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+										></path>
+									</svg>
+									网站
+								</span>
+							</a>
+							<a
+								href="/zueg/algorithm"
+								class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<span class="flex items-center">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4 mr-2"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M4.871 4A17.926 17.926 0 003 12c0 2.874.673 5.59 1.871 8m14.13 0a17.926 17.926 0 001.87-8c0-2.874-.673-5.59-1.87-8M9 9h1.246a1 1 0 01.961.725l1.586 5.55a1 1 0 00.961.725H15m1-7h-.08a2 2 0 00-1.519.698L9.6 15.302A2 2 0 018.08 16H8"
+										></path>
+									</svg>
+									算法
+								</span>
+							</a>
+						</div>
+					</div>
+
+					<HeaderLink href="/friends"> 友链 </HeaderLink>
+					<HeaderLink href="/about"> 关于 </HeaderLink>
+				</div>
+
+				<div
+					class="social-links flex mt-4 md:mt-0 md:ml-4 items-center"
 				>
-			</a>
-			<a href="https://github.com/withastro/astro" target="_blank">
-				<span class="sr-only">Go to Astro's GitHub repo</span>
-				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
-					><path
-						fill="currentColor"
-						d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-					></path></svg
-				>
-			</a>
-		</div>
-	</nav>
+					<!-- 搜索按钮 -->
+					<button
+						id="search-toggle"
+						class="social-icon kawaii-social-icon"
+						aria-label="搜索"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							class="h-5 w-5"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+							></path>
+						</svg>
+					</button>
+
+					<!-- 暗/亮模式切换按钮 -->
+					<button
+						id="theme-toggle"
+						class="social-icon kawaii-social-icon theme-toggle-btn"
+						aria-label="切换暗/亮模式"
+					>
+						<!-- 月亮图标 (暗模式) -->
+						<svg
+							id="moon-icon"
+							xmlns="http://www.w3.org/2000/svg"
+							class="icon"
+							width="20"
+							height="20"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							fill="none"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<path stroke="none" d="M0 0h24v24H0z" fill="none"
+							></path>
+							<path
+								d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"
+							></path>
+						</svg>
+						<!-- 太阳图标 (亮模式) -->
+						<svg
+							id="sun-icon"
+							xmlns="http://www.w3.org/2000/svg"
+							class="icon hidden"
+							width="20"
+							height="20"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+							stroke="currentColor"
+							fill="none"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<path stroke="none" d="M0 0h24v24H0z" fill="none"
+							></path>
+							<path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"
+							></path>
+							<path
+								d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"
+							></path>
+						</svg>
+					</button>
+
+					<a
+						href="https://github.com/your-github-username"
+						target="_blank"
+						aria-label="GitHub"
+						class="social-icon kawaii-social-icon"
+					>
+						<svg
+							viewBox="0 0 16 16"
+							aria-hidden="true"
+							width="20"
+							height="20"
+							class="transition-colors"
+						>
+							<path
+								fill="currentColor"
+								d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+							></path>
+						</svg>
+					</a>
+
+					<!-- Bilibili 图标 -->
+					<a
+						href="https://space.bilibili.com/"
+						target="_blank"
+						aria-label="Bilibili"
+						class="social-icon kawaii-social-icon"
+					>
+						<svg viewBox="0 0 24 24" width="20" height="20">
+							<path
+								fill="currentColor"
+								d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906L17.813 4.653zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773H5.333zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"
+							></path>
+						</svg>
+					</a>
+
+					<!-- 网易云音乐图标 -->
+					<a
+						href="https://music.163.com/"
+						target="_blank"
+						aria-label="网易云音乐"
+						class="social-icon kawaii-social-icon"
+					>
+						<svg viewBox="0 0 24 24" width="20" height="20">
+							<path
+								fill="currentColor"
+								d="M0 12a12 12 0 1 1 24 0 12 12 0 0 1-24 0zm13.75-7H8.4l1.5 8.5h.06c.02-.74.11-1.25.2-1.75.16-.83.4-1.5.75-2 .33-.5.73-.87 1.13-1.13.42-.27.84-.37 1.17-.37.8 0 1.42.3 1.83.75.4.44.53.99.53 1.63 0 .66-.16 1.25-.48 1.75a6.3 6.3 0 0 1-1.12 1.43c-.27.25-.55.5-.76.62l-.22.15.37.5c.1.16.26.35.44.55.18.2.37.37.6.55.2.18.42.33.66.46.23.13.47.19.73.19.34 0 .66-.11.97-.35.3-.23.56-.47.8-.8.23-.31.41-.62.56-1 .14-.38.25-.73.29-1.1l-1-.26c-.67-.15-1.02-.5-1.02-.97 0-.27.13-.52.42-.64.28-.13.81-.2 1.6-.2.2 0 .32.03.32.09 0 .07 0 .3-.02.51-.02.45-.09.96-.22 1.55-.13.58-.33 1.17-.6 1.73-.28.56-.63 1.03-1.05 1.43-.43.4-.95.6-1.56.6-.64 0-1.18-.12-1.61-.37-.44-.25-.8-.52-1.1-.87-.3-.35-.53-.68-.7-1-.17-.3-.34-.6-.34-.68 0-.08-.07-.08-.07 0 0 0-.16 1.62-.16 1.62H7L9.5 5h4.25z"
+							></path>
+						</svg>
+					</a>
+				</div>
+			</div>
+		</nav>
+	</div>
 </header>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		const menuToggle = document.getElementById("menu-toggle");
+		const navLinks = document.getElementById("nav-links");
+
+		menuToggle?.addEventListener("click", () => {
+			navLinks?.classList.toggle("hidden");
+		});
+	});
+</script>
+
 <style>
-	header {
-		margin: 0;
-		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
-	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
+	.anime-header {
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		background-color: #2a314b;
+		position: relative;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 	}
 
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
+	.anime-title {
+		position: relative;
 	}
-	nav {
+
+	.site-title-link {
+		text-decoration: none;
+		color: #fff;
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		transition: all 0.3s ease;
+	}
+
+	.site-title-link:hover {
+		color: #3b82f6;
+	}
+
+	.internal-links {
+		display: flex;
+		gap: 0.5rem;
+	}
+
+	.internal-links a {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-	}
-	nav a {
-		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
+		padding: 0.5rem 1rem;
 		text-decoration: none;
+		color: rgba(255, 255, 255, 0.7);
+		font-weight: 500;
+		transition: all 0.2s ease;
 	}
-	nav a.active {
-		text-decoration: none;
-		border-bottom-color: var(--accent);
+
+	.internal-links a:hover {
+		color: #3b82f6;
 	}
-	.social-links,
-	.social-links a {
+
+	.anime-menu-btn {
+		color: #fff;
+		border-radius: 4px;
+		padding: 0.5rem;
+		transition: all 0.3s ease;
+	}
+
+	.anime-menu-btn:hover {
+		color: #3b82f6;
+	}
+
+	.kawaii-social-icon {
 		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 0.5rem;
+		color: rgba(255, 255, 255, 0.7);
+		transition: all 0.3s ease;
+		border-radius: 50%;
+		width: 32px;
+		height: 32px;
+		background-color: rgba(255, 255, 255, 0.1);
 	}
-	@media (max-width: 720px) {
-		.social-links {
-			display: none;
+
+	.kawaii-social-icon:hover {
+		color: #3b82f6;
+		background-color: rgba(255, 255, 255, 0.15);
+	}
+
+	.internal-links a.active {
+		color: var(--accent);
+		font-weight: 600;
+	}
+
+	.social-icon {
+		padding: 0.5rem;
+	}
+
+	@media (min-width: 768px) {
+		.internal-links a {
+			margin: 0 0.2rem;
 		}
 	}
+
+	/* 主题切换按钮样式 */
+	.theme-toggle-btn {
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-right: 0.75rem;
+		transition: transform 0.2s;
+	}
+
+	.theme-toggle-btn:hover {
+		transform: rotate(12deg);
+	}
+
+	.theme-toggle-btn .icon {
+		transition: opacity 0.3s;
+	}
+
+	.theme-toggle-btn .hidden {
+		display: none;
+	}
+
+	/* 下拉菜单样式 */
+	.dropdown-container {
+		position: relative;
+	}
+
+	.dropdown-menu {
+		visibility: hidden;
+		opacity: 0;
+		transform: translateY(-10px);
+		transition:
+			opacity 0.2s ease,
+			transform 0.2s ease,
+			visibility 0.2s;
+	}
+
+	.dropdown-container:hover .dropdown-menu {
+		visibility: visible;
+		opacity: 1;
+		transform: translateY(0);
+	}
 </style>
+
+<script>
+	// 检查本地存储中的主题首选项或系统首选项
+	function getInitialTheme(): "dark" | "light" {
+		const savedTheme = localStorage.getItem("theme");
+		if (savedTheme === "dark" || savedTheme === "light") {
+			return savedTheme;
+		}
+		// 检查系统偏好
+		return window.matchMedia("(prefers-color-scheme: dark)").matches
+			? "dark"
+			: "light";
+	}
+
+	// 设置主题
+	function setTheme(theme: "dark" | "light"): void {
+		const moonIcon = document.getElementById("moon-icon");
+		const sunIcon = document.getElementById("sun-icon");
+
+		if (!moonIcon || !sunIcon) return;
+
+		if (theme === "dark") {
+			document.documentElement.classList.add("dark");
+			localStorage.setItem("theme", "dark");
+			moonIcon.classList.add("hidden");
+			sunIcon.classList.remove("hidden");
+		} else {
+			document.documentElement.classList.remove("dark");
+			localStorage.setItem("theme", "light");
+			moonIcon.classList.remove("hidden");
+			sunIcon.classList.add("hidden");
+		}
+	}
+
+	// 初始化
+	document.addEventListener("DOMContentLoaded", () => {
+		const themeToggle = document.getElementById("theme-toggle");
+
+		if (!themeToggle) return;
+
+		// 设置初始主题
+		setTheme(getInitialTheme());
+
+		// 切换主题
+		themeToggle.addEventListener("click", () => {
+			const isDark = document.documentElement.classList.contains("dark");
+			setTheme(isDark ? "light" : "dark");
+		});
+	});
+</script>
+
+<SearchModal />
