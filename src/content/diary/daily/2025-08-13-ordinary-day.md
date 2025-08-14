@@ -1,7 +1,8 @@
 ---
-title: "平凡但充实的一天"
-description: "今天工作、学习、生活都很充实"
+title: "平凡的一天"
+description: "记录日常生活的点点滴滴"
 pubDate: 2025-08-13
+heroImage: '../../../assets/cover.svg'
 mood: "平静"
 weather: "多云"
 location: "家中"

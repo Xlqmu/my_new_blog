@@ -2,6 +2,7 @@
 title: "2025年度总结 - 技术成长之年"
 description: "2025年的技术学习总结，从零开始到博客系统完成"
 pubDate: 2025-12-31
+heroImage: '../../../assets/cover.svg'
 mood: "满足"
 weather: "寒冷"
 location: "家中"

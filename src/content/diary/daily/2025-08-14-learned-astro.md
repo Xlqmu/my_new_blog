@@ -1,7 +1,8 @@
 ---
-title: '今天学会了 Astro 博客系统'
-description: '记录学习 Astro 和 Markdown 的过程'
-pubDate: '2025-08-14'
+title: "学习Astro框架的一天"
+description: "深入了解Astro的岛屿架构和组件系统"
+pubDate: 2025-08-14
+heroImage: '../../../assets/cover.svg'
 mood: '😊 开心'
 weather: '☀️ 晴朗'
 location: '家里'

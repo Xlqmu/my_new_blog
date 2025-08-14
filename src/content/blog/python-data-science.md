@@ -2,7 +2,7 @@
 title: 'Python数据科学入门'
 description: '使用Python进行数据分析和机器学习的基础教程'
 pubDate: 'Dec 06 2024'
-heroImage: '../../assets/blog-placeholder-3.jpg'
+heroImage: '../../assets/cover.svg'
 category: '数据科学'
 tags: ['Python', '数据科学', '机器学习']
 ---

@@ -2,7 +2,7 @@
 title: 'C++现代特性详解'
 description: 'C++11/14/17/20新特性介绍与实践应用'
 pubDate: 'Dec 08 2024'
-heroImage: '../../assets/blog-placeholder-2.jpg'
+heroImage: '../../assets/cover.svg'
 category: '编程'
 tags: ['C++', '现代C++', '编程语言']
 ---

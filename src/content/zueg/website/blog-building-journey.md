@@ -2,7 +2,7 @@
 title: '个人博客搭建历程'
 description: '从WordPress到静态网站生成器的网站搭建之路'
 pubDate: '2025-08-05'
-heroImage: '../../../assets/blog-placeholder-1.jpg'
+heroImage: '../../../assets/cover.svg'
 category: '网站'
 readingTime: 6
 tags: ['网站', 'Astro', '博客', 'Web开发']

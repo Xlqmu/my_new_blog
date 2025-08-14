@@ -2,7 +2,7 @@
 title: '树莓派家庭服务器搭建记录'
 description: '使用树莓派4B搭建家用NAS和媒体服务器的完整过程'
 pubDate: '2025-08-10'
-heroImage: '../../../assets/blog-placeholder-4.jpg'
+heroImage: '../../../assets/cover.svg'
 category: '硬件'
 readingTime: 8
 tags: ['树莓派', '硬件', 'NAS', '服务器', 'DIY']

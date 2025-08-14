@@ -2,7 +2,7 @@
 title: '二分查找的几种变体实现'
 description: '深入理解二分查找算法的不同应用场景'
 pubDate: '2025-07-28'
-heroImage: '../../../assets/blog-placeholder-2.jpg'
+heroImage: '../../../assets/cover.svg'
 category: '算法'
 readingTime: 7
 tags: ['算法', '二分查找', '数据结构', '编程']

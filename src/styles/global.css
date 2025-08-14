@@ -263,15 +263,15 @@ hr {
 
 /* 多个背景图片轮换 */
 .anime-bg-1::before {
-	background-image: url('/images/anime-bg/anime-bg-1.jpg');
+	background-image: url('/images/cover.svg');
 }
 
 .anime-bg-2::before {
-	background-image: url('/images/anime-bg/anime-bg-2.jpg');
+	background-image: url('/images/cover.svg');
 }
 
 .anime-bg-3::before {
-	background-image: url('/images/anime-bg/anime-bg-3.jpg');
+	background-image: url('/images/cover.svg');
 }
 
 /* 动态背景切换动画 */

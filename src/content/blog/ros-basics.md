@@ -2,7 +2,7 @@
 title: 'ROS机器人开发基础'
 description: 'Robot Operating System (ROS) 机器人操作系统入门教程'
 pubDate: 'Dec 04 2024'
-heroImage: '../../assets/blog-placeholder-4.jpg'
+heroImage: '../../assets/cover.svg'
 category: '机器人'
 tags: ['ROS', '机器人', '自动化']
 ---

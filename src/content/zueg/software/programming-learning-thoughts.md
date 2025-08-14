@@ -2,7 +2,7 @@
 title: '关于学习编程的思考'
 description: '分享一些学习编程多年来的心得体会'
 pubDate: '2025-08-14'
-heroImage: '../../../assets/blog-placeholder-3.jpg'
+heroImage: '../../../assets/cover.svg'
 category: '软件'
 readingTime: 5
 tags: ['编程', '学习', '思考', '成长', '软件']

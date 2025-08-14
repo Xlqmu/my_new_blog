@@ -2,7 +2,7 @@
 title: 'Third post'
 description: 'Lorem ipsum dolor sit amet'
 pubDate: '2025-01-22'
-heroImage: '../../assets/blog-placeholder-2.jpg'
+heroImage: '../../assets/cover.svg'
 category: '随想'
 tags: ['JavaScript', '前端开发', '学习']
 ---
