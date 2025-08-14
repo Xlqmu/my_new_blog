@@ -5,24 +5,28 @@
 ## ✨ 已实现的功能
 
 ### 1. 动态背景系统
+
 - **多种背景主题**：樱花、城市、夕阳、海洋、天空
 - **实时切换**：无需刷新页面即可切换背景
 - **随机模式**：自动随机选择背景
 - **保存设置**：用户偏好自动保存到本地存储
 
 ### 2. 交互式控制面板
+
 - **浮动控制器**：右侧粉色圆形按钮
 - **透明度调节**：0-30% 可调节背景透明度
 - **粒子效果开关**：可开启/关闭飘浮粒子动画
 - **一键切换**：5种不同风格的背景主题
 
 ### 3. 视觉效果增强
+
 - **粒子动画**：飘浮的彩色粒子效果
 - **渐变叠层**：柔和的色彩渐变覆盖
 - **卡片半透明**：内容区域毛玻璃效果
 - **动画按钮**：光泽扫过效果的二次元风格按钮
 
 ### 4. 响应式设计
+
 - **完美适配**：桌面端、平板、手机全支持
 - **性能优化**：图片预加载和错误处理
 - **主题兼容**：亮色/暗色模式自动适应
@@ -56,6 +60,7 @@ public/
 ## 🎯 如何使用
 
 ### 方法1：在现有页面使用（推荐）
+
 ```astro
 ---
 import AnimeBackground from '../components/AnimeBackground.astro';
@@ -70,9 +75,11 @@ import BackgroundController from '../components/BackgroundController.astro';
 ```
 
 ### 方法2：全局CSS方式（已配置）
+
 全局CSS已经自动应用了默认背景，无需额外配置。
 
 ### 方法3：添加自定义图片
+
 1. 将您的二次元图片放到 `public/images/anime-bg/` 目录
 2. 使用建议的文件名：
    - `sakura-landscape.jpg` - 樱花风景
@@ -84,6 +91,7 @@ import BackgroundController from '../components/BackgroundController.astro';
 ## 🎨 样式类说明
 
 ### 新增的CSS类
+
 - `.anime-content-wrapper` - 半透明内容容器
 - `.anime-card` - 二次元风格卡片
 - `.anime-btn` - 二次元风格按钮
@@ -91,6 +99,7 @@ import BackgroundController from '../components/BackgroundController.astro';
 - `.anime-particles-container` - 粒子容器
 
 ### 使用示例
+
 ```astro
 <main class="anime-content-wrapper">
   <div class="anime-card">
@@ -104,6 +113,7 @@ import BackgroundController from '../components/BackgroundController.astro';
 ## ⚙️ 自定义配置
 
 ### AnimeBackground 组件参数
+
 ```astro
 <AnimeBackground 
   variant="sakura"    // 'sakura' | 'city' | 'sunset' | 'ocean' | 'random'
@@ -113,6 +123,7 @@ import BackgroundController from '../components/BackgroundController.astro';
 ```
 
 ### CSS 变量自定义
+
 ```css
 :root {
   --anime-bg-opacity: 0.1;
