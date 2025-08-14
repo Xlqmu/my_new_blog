@@ -1,0 +1,182 @@
+---
+// CSSOnlyBackground.astro - 纯CSS背景切换器
+---
+
+<div class="css-bg-switcher">
+    <input type="radio" id="bg-sakura" name="bg-theme" value="sakura" checked />
+    <input type="radio" id="bg-city" name="bg-theme" value="city" />
+    <input type="radio" id="bg-sunset" name="bg-theme" value="sunset" />
+    <input type="radio" id="bg-blossom" name="bg-theme" value="blossom" />
+    <input type="radio" id="bg-sky" name="bg-theme" value="sky" />
+
+    <div class="bg-tabs">
+        <label for="bg-sakura" class="bg-tab">🌸</label>
+        <label for="bg-city" class="bg-tab">🏙️</label>
+        <label for="bg-sunset" class="bg-tab">🌅</label>
+        <label for="bg-blossom" class="bg-tab">🌺</label>
+        <label for="bg-sky" class="bg-tab">☁️</label>
+    </div>
+
+    <div class="bg-layer bg-sakura-layer"></div>
+    <div class="bg-layer bg-city-layer"></div>
+    <div class="bg-layer bg-sunset-layer"></div>
+    <div class="bg-layer bg-blossom-layer"></div>
+    <div class="bg-layer bg-sky-layer"></div>
+</div>
+
+<style>
+    .css-bg-switcher {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -10;
+        pointer-events: none;
+    }
+
+    /* 隐藏单选按钮 */
+    .css-bg-switcher input[type="radio"] {
+        display: none;
+    }
+
+    /* 标签页样式 */
+    .bg-tabs {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        pointer-events: all;
+        z-index: 1000;
+    }
+
+    .bg-tab {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 107, 157, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .bg-tab:hover {
+        transform: scale(1.1);
+        border-color: #ff6b9d;
+        box-shadow: 0 6px 20px rgba(255, 107, 157, 0.3);
+    }
+
+    /* 背景图层 */
+    .bg-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+    }
+
+    /* 不同背景图片 */
+    .bg-sakura-layer {
+        background-image: url("/images/anime-bg/anime-bg-1.svg");
+    }
+
+    .bg-city-layer {
+        background-image: url("/images/anime-bg/anime-city.svg");
+    }
+
+    .bg-sunset-layer {
+        background-image: url("/images/anime-bg/sunset-field.svg");
+    }
+
+    .bg-blossom-layer {
+        background-image: url("/images/anime-bg/cherry-blossom.svg");
+    }
+
+    .bg-sky-layer {
+        background-image: url("/images/anime-bg/anime-sky.svg");
+    }
+
+    /* 选中状态下显示对应背景 */
+    #bg-sakura:checked ~ .bg-sakura-layer {
+        opacity: 0.15;
+    }
+
+    #bg-city:checked ~ .bg-city-layer {
+        opacity: 0.15;
+    }
+
+    #bg-sunset:checked ~ .bg-sunset-layer {
+        opacity: 0.15;
+    }
+
+    #bg-blossom:checked ~ .bg-blossom-layer {
+        opacity: 0.15;
+    }
+
+    #bg-sky:checked ~ .bg-sky-layer {
+        opacity: 0.15;
+    }
+
+    /* 选中标签的样式 */
+    #bg-sakura:checked ~ .bg-tabs label[for="bg-sakura"],
+    #bg-city:checked ~ .bg-tabs label[for="bg-city"],
+    #bg-sunset:checked ~ .bg-tabs label[for="bg-sunset"],
+    #bg-blossom:checked ~ .bg-tabs label[for="bg-blossom"],
+    #bg-sky:checked ~ .bg-tabs label[for="bg-sky"] {
+        background: linear-gradient(135deg, #ff6b9d, #c44569);
+        color: white;
+        border-color: #ff6b9d;
+        transform: scale(1.2);
+    }
+
+    /* 暗色模式调整 */
+    :global(.dark) .bg-layer {
+        filter: brightness(0.7);
+    }
+
+    :global(.dark) .bg-tab {
+        background: rgba(26, 31, 53, 0.9);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* 移动端适配 */
+    @media (max-width: 768px) {
+        .bg-tabs {
+            bottom: 20px;
+            right: 20px;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 160px;
+        }
+
+        .bg-tab {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+        }
+    }
+
+    /* 平滑滚动时保持固定 */
+    .bg-layer {
+        background-attachment: fixed;
+    }
+
+    @media (max-width: 768px) {
+        .bg-layer {
+            background-attachment: scroll;
+        }
+    }
+</style>

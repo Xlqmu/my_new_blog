@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
+import CSSOnlyBackground from "../components/CSSOnlyBackground.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import Header from "../components/Header.astro";
@@ -17,11 +18,12 @@ const posts = (await getCollection("blog"))
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
+		<CSSOnlyBackground />
 		<Header />
-		<main>
+		<main class="anime-content-wrapper">
 			<!-- 英雄区域 -->
 			<section
-				class="anime-hero-section mb-12 bg-white dark:bg-dark-primary transition-colors duration-300"
+				class="anime-hero-section mb-12 transition-colors duration-300"
 			>
 				<div class="anime-hero-decoration"></div>
 				<div
@@ -40,8 +42,12 @@ const posts = (await getCollection("blog"))
 						{SITE_DESCRIPTION}
 					</p>
 					<div class="flex flex-wrap justify-center gap-4">
-						<a href="/blog" class="anime-btn-primary"> 阅读博客 </a>
-						<a href="/about" class="anime-btn-secondary">
+						<a href="/blog" class="anime-btn"> 阅读博客 </a>
+						<a
+							href="/about"
+							class="anime-btn"
+							style="background: linear-gradient(135deg, #6b73ff, #000dff);"
+						>
 							关于我
 						</a>
 					</div>
@@ -57,7 +63,7 @@ const posts = (await getCollection("blog"))
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 						{
 							posts.map((post) => (
-								<article class="kawaii-post-card">
+								<article class="anime-card kawaii-post-card">
 									<a
 										href={`/blog/${post.id}/`}
 										class="post-link"
@@ -461,39 +467,49 @@ const posts = (await getCollection("blog"))
 				border-radius: 2px;
 			}
 
-			/* 博客卡片 */
+			/* 博客卡片 - 已整合到全局 anime-card 样式 */
 			.kawaii-post-card {
-				padding: 1.5rem;
-				border-radius: 8px;
-				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-				background-color: white;
-				transition: all 0.3s;
-				border: 1px solid #e5e7eb;
+				/* 继承 anime-card 的样式，这里只添加特定样式 */
+				position: relative;
+				overflow: hidden;
+			}
+
+			.kawaii-post-card::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: 3px;
+				background: linear-gradient(90deg, #ff6b9d, #c44569, #ff6b9d);
+				border-radius: 16px 16px 0 0;
 			}
 
 			.kawaii-post-card:hover {
-				transform: translateY(-5px);
-				box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-				border-color: rgba(59, 130, 246, 0.5);
+				/* anime-card 的 hover 效果会自动应用 */
 			}
 
 			.kawaii-image-wrapper {
 				position: relative;
 				overflow: hidden;
-				border-radius: 6px;
+				border-radius: 12px;
+				margin-bottom: 16px;
 			}
 
 			.kawaii-image {
-				transition: all 0.5s ease;
+				transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+				width: 100%;
+				height: auto;
 			}
 
 			.kawaii-post-card:hover .kawaii-image {
-				transform: scale(1.05);
+				transform: scale(1.08);
 			}
 
 			.kawaii-post-title {
-				color: #374151;
-				transition: color 0.3s;
+				color: var(--text-primary);
+				transition: color 0.3s ease;
+				margin-bottom: 12px;
 			}
 
 			.post-link:hover .kawaii-post-title {

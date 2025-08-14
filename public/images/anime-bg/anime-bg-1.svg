@@ -1,0 +1,43 @@
+<!-- 占位符 SVG 背景图片 -->
+<svg width="1920" height="1080"
+    xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#ff9a9e;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#fecfef;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#fecfef;stop-opacity:1" />
+        </linearGradient>
+        <radialGradient id="cloud1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.8" />
+            <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.2" />
+        </radialGradient>
+    </defs>
+
+    <!-- 背景渐变 -->
+    <rect width="100%" height="100%" fill="url(#bg1)" />
+
+    <!-- 云朵装饰 -->
+    <circle cx="300" cy="200" r="80" fill="url(#cloud1)" />
+    <circle cx="280" cy="220" r="60" fill="url(#cloud1)" />
+    <circle cx="320" cy="220" r="60" fill="url(#cloud1)" />
+
+    <circle cx="1500" cy="300" r="100" fill="url(#cloud1)" />
+    <circle cx="1480" cy="320" r="70" fill="url(#cloud1)" />
+    <circle cx="1520" cy="320" r="70" fill="url(#cloud1)" />
+
+    <!-- 樱花花瓣 -->
+    <g opacity="0.6">
+        <circle cx="150" cy="150" r="8" fill="#ff6b9d" opacity="0.7" />
+        <circle cx="800" cy="100" r="6" fill="#ff6b9d" opacity="0.6" />
+        <circle cx="1200" cy="200" r="7" fill="#ff6b9d" opacity="0.8" />
+        <circle cx="400" cy="800" r="5" fill="#ff6b9d" opacity="0.5" />
+        <circle cx="1600" cy="600" r="9" fill="#ff6b9d" opacity="0.7" />
+    </g>
+
+    <!-- 装饰性的山丘 -->
+    <path d="M0,800 Q400,700 800,750 T1600,720 L1920,750 L1920,1080 L0,1080 Z" fill="#fecfef" opacity="0.4" />
+
+    <!-- 文字标识 -->
+    <text x="960" y="540" text-anchor="middle" font-family="Arial" font-size="48" fill="#ff6b9d" opacity="0.3">二次元风格背景</text>
+    <text x="960" y="600" text-anchor="middle" font-family="Arial" font-size="24" fill="#c44569" opacity="0.5">请添加你的背景图片到 public/images/anime-bg/ 目录</text>
+</svg>

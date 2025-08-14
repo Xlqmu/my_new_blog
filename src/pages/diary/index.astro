@@ -1,8 +1,15 @@
 ---
+import { getCollection } from "astro:content";
 import BaseHead from "../../components/BaseHead.astro";
 import Footer from "../../components/Footer.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
 import Header from "../../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+
+const diaryEntries = await getCollection("diary");
+const sortedDiary = diaryEntries.sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 ---
 
 <!doctype html>
@@ -28,158 +35,112 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
                 <!-- 日记分类标签 -->
                 <div class="flex flex-wrap gap-3 mb-8">
-                    <a
-                        href="/diary/timeline"
-                        class="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+                    <button
+                        onclick="filterDiaryByType('all')"
+                        id="filter-all"
+                        class="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition filter-btn"
+                    >
+                        全部
+                    </button>
+                    <button
+                        onclick="filterDiaryByType('timeline')"
+                        id="filter-timeline"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition filter-btn"
                     >
                         时间线
-                    </a>
-                    <a
-                        href="/diary/daily"
-                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                    </button>
+                    <button
+                        onclick="filterDiaryByType('daily')"
+                        id="filter-daily"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition filter-btn"
                     >
                         每日
-                    </a>
-                    <a
-                        href="/diary/weekly"
-                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                    </button>
+                    <button
+                        onclick="filterDiaryByType('weekly')"
+                        id="filter-weekly"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition filter-btn"
                     >
                         每周
-                    </a>
-                    <a
-                        href="/diary/monthly"
-                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                    </button>
+                    <button
+                        onclick="filterDiaryByType('monthly')"
+                        id="filter-monthly"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition filter-btn"
                     >
                         每月
-                    </a>
-                    <a
-                        href="/diary/annual"
-                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                    </button>
+                    <button
+                        onclick="filterDiaryByType('annual')"
+                        id="filter-annual"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition filter-btn"
                     >
                         年度
-                    </a>
+                    </button>
                 </div>
 
                 <!-- 时间线视图 (默认) -->
-                <div class="space-y-8">
-                    <!-- 时间线项目 -->
-                    <div
-                        class="relative pl-8 pb-8 border-l-2 border-blue-500 dark:border-blue-400"
-                    >
-                        <div
-                            class="absolute left-[-8px] bg-blue-500 dark:bg-blue-400 w-4 h-4 rounded-full"
-                        >
-                        </div>
-                        <div
-                            class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md"
-                        >
-                            <div class="flex justify-between items-center mb-3">
-                                <h3 class="text-xl font-bold dark:text-white">
-                                    周末咖啡馆发现
-                                </h3>
-                                <span
-                                    class="text-sm text-gray-500 dark:text-gray-400"
-                                    >2025年8月10日</span
-                                >
+                <div class="space-y-8" id="diary-entries">
+                    {
+                        sortedDiary.map((entry) => (
+                            <div
+                                class="relative pl-8 pb-8 border-l-2 border-blue-500 dark:border-blue-400 diary-entry"
+                                data-date={entry.data.pubDate.toISOString()}
+                            >
+                                <div class="absolute left-[-8px] bg-blue-500 dark:bg-blue-400 w-4 h-4 rounded-full" />
+                                <div class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md">
+                                    <div class="flex justify-between items-center mb-3">
+                                        <h3 class="text-xl font-bold dark:text-white">
+                                            <a
+                                                href={`/diary/${entry.id}`}
+                                                class="hover:text-blue-600 dark:hover:text-blue-400 transition"
+                                            >
+                                                {entry.data.title}
+                                            </a>
+                                        </h3>
+                                        <div class="text-sm text-gray-500 dark:text-gray-400 text-right">
+                                            <FormattedDate
+                                                date={entry.data.pubDate}
+                                            />
+                                            {entry.data.mood && (
+                                                <div class="mt-1">
+                                                    心情：{entry.data.mood}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-700 dark:text-gray-300 mb-4">
+                                        {entry.data.description}
+                                    </p>
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex flex-wrap gap-2">
+                                            {entry.data.tags?.map((tag) => (
+                                                <span class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded">
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
+                                        {(entry.data.weather ||
+                                            entry.data.location) && (
+                                            <div class="text-xs text-gray-500 dark:text-gray-400">
+                                                {entry.data.weather && (
+                                                    <span>
+                                                        {entry.data.weather}
+                                                    </span>
+                                                )}
+                                                {entry.data.location && (
+                                                    <span>
+                                                        {" "}
+                                                        · {entry.data.location}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
-                            <p class="text-gray-700 dark:text-gray-300 mb-4">
-                                今天在市中心发现了一家新开的咖啡馆，装修风格很复古，咖啡豆是自己烘焙的，喝了一杯埃塞俄比亚的单品，酸甜平衡，有明显的蓝莓和柑橘风味。
-                            </p>
-                            <div class="flex flex-wrap gap-2">
-                                <span
-                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
-                                    >咖啡</span
-                                >
-                                <span
-                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
-                                    >周末</span
-                                >
-                                <span
-                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
-                                    >发现</span
-                                >
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="relative pl-8 pb-8 border-l-2 border-blue-500 dark:border-blue-400"
-                    >
-                        <div
-                            class="absolute left-[-8px] bg-blue-500 dark:bg-blue-400 w-4 h-4 rounded-full"
-                        >
-                        </div>
-                        <div
-                            class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md"
-                        >
-                            <div class="flex justify-between items-center mb-3">
-                                <h3 class="text-xl font-bold dark:text-white">
-                                    React 18新特性学习
-                                </h3>
-                                <span
-                                    class="text-sm text-gray-500 dark:text-gray-400"
-                                    >2025年8月8日</span
-                                >
-                            </div>
-                            <p class="text-gray-700 dark:text-gray-300 mb-4">
-                                今天深入研究了React 18的Concurrent
-                                Mode和Suspense组件，这些新特性对于优化应用性能和用户体验确实有很大帮助。尤其是Suspense的数据获取模式，可以让组件树的渲染变得更加平滑。
-                            </p>
-                            <div class="flex flex-wrap gap-2">
-                                <span
-                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
-                                    >React</span
-                                >
-                                <span
-                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
-                                    >前端</span
-                                >
-                                <span
-                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
-                                    >学习</span
-                                >
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        class="relative pl-8 pb-8 border-l-2 border-blue-500 dark:border-blue-400"
-                    >
-                        <div
-                            class="absolute left-[-8px] bg-blue-500 dark:bg-blue-400 w-4 h-4 rounded-full"
-                        >
-                        </div>
-                        <div
-                            class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow-md"
-                        >
-                            <div class="flex justify-between items-center mb-3">
-                                <h3 class="text-xl font-bold dark:text-white">
-                                    个人博客改版计划
-                                </h3>
-                                <span
-                                    class="text-sm text-gray-500 dark:text-gray-400"
-                                    >2025年8月5日</span
-                                >
-                            </div>
-                            <p class="text-gray-700 dark:text-gray-300 mb-4">
-                                计划在这个月内将个人博客从Gatsby迁移到Astro，主要是因为Astro的性能更好，对静态内容的处理更加高效。今天开始整理内容和规划新的页面布局。
-                            </p>
-                            <div class="flex flex-wrap gap-2">
-                                <span
-                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
-                                    >博客</span
-                                >
-                                <span
-                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
-                                    >Astro</span
-                                >
-                                <span
-                                    class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded"
-                                    >计划</span
-                                >
-                            </div>
-                        </div>
-                    </div>
+                        ))
+                    }
                 </div>
 
                 <!-- 分页 -->
@@ -217,5 +178,83 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
             </div>
         </main>
         <Footer />
+
+        <script is:inline>
+            function filterDiaryByType(type) {
+                const entries = document.querySelectorAll(".diary-entry");
+                const buttons = document.querySelectorAll(".filter-btn");
+
+                // 更新按钮样式
+                buttons.forEach((btn) => {
+                    btn.classList.remove("bg-blue-500", "text-white");
+                    btn.classList.add(
+                        "bg-gray-200",
+                        "dark:bg-gray-700",
+                        "text-gray-800",
+                        "dark:text-gray-200",
+                    );
+                });
+
+                // 高亮当前选中的按钮
+                const activeButton = document.getElementById(`filter-${type}`);
+                if (activeButton) {
+                    activeButton.classList.remove(
+                        "bg-gray-200",
+                        "dark:bg-gray-700",
+                        "text-gray-800",
+                        "dark:text-gray-200",
+                    );
+                    activeButton.classList.add("bg-blue-500", "text-white");
+                }
+
+                // 过滤条目
+                if (type === "all") {
+                    entries.forEach((entry) => {
+                        entry.style.display = "block";
+                    });
+                } else {
+                    // 根据日期过滤日记条目
+                    const now = new Date();
+
+                    entries.forEach((entry) => {
+                        const entryDate = new Date(
+                            entry.getAttribute("data-date"),
+                        );
+                        let shouldShow = false;
+
+                        switch (type) {
+                            case "timeline":
+                                shouldShow = true; // 时间线显示全部
+                                break;
+                            case "daily":
+                                shouldShow =
+                                    entryDate.toDateString() ===
+                                    now.toDateString();
+                                break;
+                            case "weekly":
+                                const weekAgo = new Date(
+                                    now.getTime() - 7 * 24 * 60 * 60 * 1000,
+                                );
+                                shouldShow =
+                                    entryDate >= weekAgo && entryDate <= now;
+                                break;
+                            case "monthly":
+                                shouldShow =
+                                    entryDate.getMonth() === now.getMonth() &&
+                                    entryDate.getFullYear() ===
+                                        now.getFullYear();
+                                break;
+                            case "annual":
+                                shouldShow =
+                                    entryDate.getFullYear() ===
+                                    now.getFullYear();
+                                break;
+                        }
+
+                        entry.style.display = shouldShow ? "block" : "none";
+                    });
+                }
+            }
+        </script>
     </body>
 </html>

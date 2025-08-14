@@ -65,6 +65,39 @@ body {
 	font-size: 20px;
 	line-height: 1.7;
 	transition: background-color 0.3s ease, color 0.3s ease;
+	position: relative;
+}
+
+/* 二次元背景图片样式 */
+body::before {
+	content: '';
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url('/images/anime-bg/anime-bg-1.svg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	opacity: 0.1;
+	z-index: -2;
+	pointer-events: none;
+}
+
+/* 暗模式下的背景调整 */
+.dark body::before {
+	opacity: 0.05;
+	filter: brightness(0.8) contrast(1.2);
+}
+
+/* 为主要内容区域添加半透明背景 */
+main {
+	width: 720px;
+	max-width: calc(100% - 2em);
+	margin: auto;
+	padding: 3em 1em;
 }
 
 main {
@@ -199,4 +232,169 @@ hr {
 	clip-path: inset(50%);
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
+}
+
+/* 二次元风格样式 */
+.anime-bg-wrapper {
+	position: relative;
+	min-height: 100vh;
+}
+
+.anime-bg-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(135deg,
+			rgba(255, 182, 193, 0.1) 0%,
+			rgba(173, 216, 230, 0.1) 50%,
+			rgba(221, 160, 221, 0.1) 100%);
+	z-index: -1;
+	pointer-events: none;
+}
+
+/* 多个背景图片轮换 */
+.anime-bg-1::before {
+	background-image: url('/images/anime-bg/anime-bg-1.jpg');
+}
+
+.anime-bg-2::before {
+	background-image: url('/images/anime-bg/anime-bg-2.jpg');
+}
+
+.anime-bg-3::before {
+	background-image: url('/images/anime-bg/anime-bg-3.jpg');
+}
+
+/* 动态背景切换动画 */
+@keyframes bgFadeIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 0.1;
+	}
+}
+
+body::before {
+	animation: bgFadeIn 2s ease-in-out;
+}
+
+/* 粒子效果 */
+.anime-particles {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: -1;
+}
+
+.anime-particle {
+	position: absolute;
+	width: 4px;
+	height: 4px;
+	background: rgba(255, 182, 193, 0.6);
+	border-radius: 50%;
+	animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+
+	0%,
+	100% {
+		transform: translateY(0px) rotate(0deg);
+		opacity: 0;
+	}
+
+	50% {
+		transform: translateY(-100px) rotate(180deg);
+		opacity: 1;
+	}
+}
+
+/* 内容区域半透明背景 */
+.anime-content-wrapper {
+	background-color: rgba(255, 255, 255, 0.85);
+	border-radius: 20px;
+	backdrop-filter: blur(15px);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	box-shadow:
+		0 8px 32px rgba(0, 0, 0, 0.1),
+		0 4px 16px rgba(0, 0, 0, 0.1);
+	margin: 20px 0;
+	padding: 30px;
+	position: relative;
+	overflow: hidden;
+}
+
+.dark .anime-content-wrapper {
+	background-color: rgba(26, 31, 53, 0.85);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	box-shadow:
+		0 8px 32px rgba(0, 0, 0, 0.3),
+		0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* 卡片悬浮效果 */
+.anime-card {
+	background: rgba(255, 255, 255, 0.9);
+	border-radius: 16px;
+	padding: 24px;
+	margin: 16px 0;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	backdrop-filter: blur(10px);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.anime-card:hover {
+	transform: translateY(-8px);
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.dark .anime-card {
+	background: rgba(17, 24, 39, 0.9);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 二次元按钮样式 */
+.anime-btn {
+	background: linear-gradient(135deg, #ff6b9d, #c44569);
+	color: white;
+	border: none;
+	border-radius: 25px;
+	padding: 12px 24px;
+	font-weight: 600;
+	text-decoration: none;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+	position: relative;
+	overflow: hidden;
+}
+
+.anime-btn::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+	transition: left 0.5s;
+}
+
+.anime-btn:hover::before {
+	left: 100%;
+}
+
+.anime-btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
 }
