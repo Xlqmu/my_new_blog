@@ -1,229 +1,270 @@
 ---
-import BaseHead from "../../components/BaseHead.astro";
-import Footer from "../../components/Footer.astro";
-import Header from "../../components/Header.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import { getCollection } from "astro:content";
+
+// 获取所有博客文章
+const posts = await getCollection("blog");
+
+// 统计分类
+const categoryCounts: Record<string, number> = {};
+const categoryPosts: Record<string, typeof posts> = {};
+
+posts.forEach((post) => {
+    const category = post.data.category;
+    if (category) {
+        categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+        if (!categoryPosts[category]) {
+            categoryPosts[category] = [];
+        }
+        categoryPosts[category].push(post);
+    }
+});
+
+// 按文章数量排序
+const sortedCategories = Object.entries(categoryCounts).sort(
+    ([, a], [, b]) => b - a,
+);
+
+// 预定义颜色和图标
+const categoryStyles: Record<
+    string,
+    { color: string; bgColor: string; darkBgColor: string; icon: string }
+> = {
+    技术分享: {
+        color: "blue",
+        bgColor: "bg-blue-100",
+        darkBgColor: "dark:bg-blue-900",
+        icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
+    },
+    Web开发: {
+        color: "green",
+        bgColor: "bg-green-100",
+        darkBgColor: "dark:bg-green-900",
+        icon: "M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9",
+    },
+    工具: {
+        color: "purple",
+        bgColor: "bg-purple-100",
+        darkBgColor: "dark:bg-purple-900",
+        icon: "M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z",
+    },
+    设计: {
+        color: "pink",
+        bgColor: "bg-pink-100",
+        darkBgColor: "dark:bg-pink-900",
+        icon: "M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01",
+    },
+    教程: {
+        color: "yellow",
+        bgColor: "bg-yellow-100",
+        darkBgColor: "dark:bg-yellow-900",
+        icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253",
+    },
+    随想: {
+        color: "red",
+        bgColor: "bg-red-100",
+        darkBgColor: "dark:bg-red-900",
+        icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
+    },
+};
+
+// 默认样式
+const defaultStyle = {
+    color: "gray",
+    bgColor: "bg-gray-100",
+    darkBgColor: "dark:bg-gray-700",
+    icon: "M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z",
+};
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-    <head>
-        <BaseHead
-            title={`分类 | ${SITE_TITLE}`}
-            description={SITE_DESCRIPTION}
-        />
-    </head>
-    <body>
-        <Header />
-        <main class="container mx-auto px-4 py-12">
-            <div class="max-w-4xl mx-auto">
-                <h1
-                    class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100"
-                >
-                    博客分类
-                </h1>
-                <p class="text-lg mb-8 text-gray-700 dark:text-gray-300">
-                    浏览不同主题的文章。
-                </p>
+<BaseLayout title={`分类 | ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
+    <main class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto">
+            <h1
+                class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100"
+            >
+                博客分类
+            </h1>
+            <p class="text-lg mb-8 text-gray-700 dark:text-gray-300">
+                浏览不同主题的文章。
+            </p>
 
-                <div
-                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-                >
-                    <!-- 分类卡片 -->
-                    <a
-                        href="/blog/categories/programming"
-                        class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center"
-                    >
-                        <div
-                            class="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mb-4"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-8 w-8 text-blue-500"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-                                ></path>
-                            </svg>
+            <div class="space-y-8">
+                {
+                    sortedCategories.length > 0 ? (
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                            {sortedCategories.map(([category, count]) => {
+                                const style =
+                                    categoryStyles[category] || defaultStyle;
+                                return (
+                                    <div
+                                        class="category-filter bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition cursor-pointer"
+                                        data-category={category}
+                                    >
+                                        <div
+                                            class={`w-16 h-16 rounded-full ${style.bgColor} ${style.darkBgColor} flex items-center justify-center mb-4`}
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                class={`h-8 w-8 text-${style.color}-500`}
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d={style.icon}
+                                                />
+                                            </svg>
+                                        </div>
+                                        <h2 class="text-xl font-bold mb-2 text-center text-gray-900 dark:text-white">
+                                            {category}
+                                        </h2>
+                                        <p class="text-gray-600 dark:text-gray-300 text-center">
+                                            {count} 篇文章
+                                        </p>
+                                    </div>
+                                );
+                            })}
                         </div>
-                        <h2
-                            class="text-xl font-bold mb-2 text-center text-gray-900 dark:text-white"
-                        >
-                            编程
-                        </h2>
-                        <p class="text-gray-600 dark:text-gray-300 text-center">
-                            42 篇文章
-                        </p>
-                    </a>
+                    ) : (
+                        <div class="text-center py-12">
+                            <div class="text-gray-400 dark:text-gray-500 mb-4">
+                                <svg
+                                    class="mx-auto h-12 w-12"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+                                    />
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">
+                                暂无分类
+                            </h3>
+                            <p class="text-gray-500 dark:text-gray-400">
+                                还没有创建任何文章分类。你可以在文章的
+                                frontmatter 中添加 'category' 字段来创建分类。
+                            </p>
+                        </div>
+                    )
+                }
 
-                    <a
-                        href="/blog/categories/web-development"
-                        class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center"
-                    >
-                        <div
-                            class="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mb-4"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-8 w-8 text-green-500"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                                ></path>
-                            </svg>
-                        </div>
+                {/* 文章列表区域 */}
+                <div class="posts-container hidden">
+                    <div class="flex items-center justify-between mb-6">
                         <h2
-                            class="text-xl font-bold mb-2 text-center text-gray-900 dark:text-white"
+                            id="category-title"
+                            class="text-2xl font-bold text-gray-800 dark:text-gray-100"
                         >
-                            Web 开发
                         </h2>
-                        <p class="text-gray-600 dark:text-gray-300 text-center">
-                            28 篇文章
-                        </p>
-                    </a>
+                        <button
+                            id="back-to-categories"
+                            class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300"
+                        >
+                            ← 返回分类
+                        </button>
+                    </div>
 
-                    <a
-                        href="/blog/categories/tools"
-                        class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center"
-                    >
-                        <div
-                            class="w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center mb-4"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-8 w-8 text-purple-500"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"
-                                ></path>
-                            </svg>
-                        </div>
-                        <h2
-                            class="text-xl font-bold mb-2 text-center text-gray-900 dark:text-white"
-                        >
-                            工具
-                        </h2>
-                        <p class="text-gray-600 dark:text-gray-300 text-center">
-                            15 篇文章
-                        </p>
-                    </a>
-
-                    <a
-                        href="/blog/categories/design"
-                        class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center"
-                    >
-                        <div
-                            class="w-16 h-16 rounded-full bg-pink-100 dark:bg-pink-900 flex items-center justify-center mb-4"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-8 w-8 text-pink-500"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
-                                ></path>
-                            </svg>
-                        </div>
-                        <h2
-                            class="text-xl font-bold mb-2 text-center text-gray-900 dark:text-white"
-                        >
-                            设计
-                        </h2>
-                        <p class="text-gray-600 dark:text-gray-300 text-center">
-                            12 篇文章
-                        </p>
-                    </a>
-
-                    <a
-                        href="/blog/categories/tutorial"
-                        class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center"
-                    >
-                        <div
-                            class="w-16 h-16 rounded-full bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center mb-4"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-8 w-8 text-yellow-500"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                                ></path>
-                            </svg>
-                        </div>
-                        <h2
-                            class="text-xl font-bold mb-2 text-center text-gray-900 dark:text-white"
-                        >
-                            教程
-                        </h2>
-                        <p class="text-gray-600 dark:text-gray-300 text-center">
-                            20 篇文章
-                        </p>
-                    </a>
-
-                    <a
-                        href="/blog/categories/thoughts"
-                        class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition flex flex-col items-center"
-                    >
-                        <div
-                            class="w-16 h-16 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center mb-4"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-8 w-8 text-red-500"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                                ></path>
-                            </svg>
-                        </div>
-                        <h2
-                            class="text-xl font-bold mb-2 text-center text-gray-900 dark:text-white"
-                        >
-                            随想
-                        </h2>
-                        <p class="text-gray-600 dark:text-gray-300 text-center">
-                            18 篇文章
-                        </p>
-                    </a>
+                    <div id="posts-list" class="space-y-4">
+                        {/* 动态填充文章列表 */}
+                    </div>
                 </div>
             </div>
-        </main>
-        <Footer />
-    </body>
-</html>
+        </div>
+    </main>
+</BaseLayout>
+
+<script define:vars={{ categoryPosts }}>
+    // 分类过滤功能
+    const categoryFilters = document.querySelectorAll(".category-filter");
+    const postsContainer = document.querySelector(".posts-container");
+    const categoriesGrid = document.querySelector(".grid");
+    const categoryTitle = document.getElementById("category-title");
+    const postsList = document.getElementById("posts-list");
+    const backButton = document.getElementById("back-to-categories");
+
+    categoryFilters.forEach((filter) => {
+        filter.addEventListener("click", () => {
+            const category = filter.getAttribute("data-category");
+            const posts = categoryPosts[category] || [];
+
+            // 隐藏分类网格，显示文章列表
+            categoriesGrid?.classList.add("hidden");
+            postsContainer?.classList.remove("hidden");
+
+            // 设置分类标题
+            if (categoryTitle) {
+                categoryTitle.textContent = `${category} (${posts.length} 篇文章)`;
+            }
+
+            // 生成文章列表
+            if (postsList) {
+                postsList.innerHTML = posts
+                    .sort(
+                        (a, b) =>
+                            new Date(b.data.pubDate).getTime() -
+                            new Date(a.data.pubDate).getTime(),
+                    )
+                    .map(
+                        (post) => `
+                                <article class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition">
+                                    <h3>
+                                        <a href="/blog/${post.id}" class="text-xl font-medium hover:text-blue-500 text-gray-900 dark:text-white">
+                                            ${post.data.title}
+                                        </a>
+                                    </h3>
+                                    <div class="flex items-center gap-4 mt-2">
+                                        <time class="text-gray-600 dark:text-gray-300">
+                                            ${new Date(post.data.pubDate).toLocaleDateString("zh-CN")}
+                                        </time>
+                                        ${
+                                            post.data.tags &&
+                                            post.data.tags.length > 0
+                                                ? `
+                                            <div class="flex gap-2">
+                                                ${post.data.tags
+                                                    .map(
+                                                        (tag) => `
+                                                    <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">
+                                                        ${tag}
+                                                    </span>
+                                                `,
+                                                    )
+                                                    .join("")}
+                                            </div>
+                                        `
+                                                : ""
+                                        }
+                                    </div>
+                                    ${
+                                        post.data.description
+                                            ? `
+                                        <p class="text-gray-600 dark:text-gray-300 mt-2">
+                                            ${post.data.description}
+                                        </p>
+                                    `
+                                            : ""
+                                    }
+                                </article>
+                            `,
+                    )
+                    .join("");
+            }
+        });
+    });
+
+    // 返回分类按钮
+    backButton?.addEventListener("click", () => {
+        postsContainer?.classList.add("hidden");
+        categoriesGrid?.classList.remove("hidden");
+    });
+</script>

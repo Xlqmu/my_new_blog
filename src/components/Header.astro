@@ -7,9 +7,9 @@ import SearchModal from "./SearchModal.astro";
 <header
 	class="sticky top-0 z-50 anime-header bg-white dark:bg-dark-primary transition-colors duration-300"
 >
-	<div class="container mx-auto">
+	<div class="container mx-auto px-2">
 		<nav
-			class="flex flex-wrap items-center justify-between py-3 px-4 relative"
+			class="flex flex-wrap items-center justify-between py-3 px-2 relative"
 		>
 			<h1 class="text-xl font-bold anime-title">
 				<a href="/" class="site-title-link">
@@ -432,7 +432,7 @@ import SearchModal from "./SearchModal.astro";
 					</div>
 
 					<HeaderLink href="/friends"> 友链 </HeaderLink>
-					<HeaderLink href="/anime-bg-demo"> 背景展示 </HeaderLink>
+					<!-- <HeaderLink href="/anime-bg-demo"> 背景展示 </HeaderLink> -->
 					<HeaderLink href="/about"> 关于 </HeaderLink>
 				</div>
 
@@ -459,6 +459,16 @@ import SearchModal from "./SearchModal.astro";
 								d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
 							></path>
 						</svg>
+					</button>
+
+					<!-- 背景设置按钮 -->
+					<button
+						id="background-settings-btn"
+						class="social-icon kawaii-social-icon"
+						title="背景设置"
+						aria-label="打开背景设置"
+					>
+						�
 					</button>
 
 					<!-- 暗/亮模式切换按钮 -->
@@ -574,6 +584,18 @@ import SearchModal from "./SearchModal.astro";
 		menuToggle?.addEventListener("click", () => {
 			navLinks?.classList.toggle("hidden");
 		});
+
+		// 背景设置按钮功能
+		const backgroundSettingsBtn = document.getElementById(
+			"background-settings-btn",
+		);
+
+		if (backgroundSettingsBtn) {
+			backgroundSettingsBtn.addEventListener("click", function () {
+				// 发送打开背景设置模态框事件
+				window.dispatchEvent(new CustomEvent("openBackgroundModal"));
+			});
+		}
 	});
 </script>
 
@@ -650,6 +672,13 @@ import SearchModal from "./SearchModal.astro";
 		background-color: rgba(255, 255, 255, 0.15);
 	}
 
+	/* 背景切换按钮样式 */
+	/* 移动端适配 */
+	@media (max-width: 768px) {
+		.social-links {
+			flex-wrap: wrap;
+		}
+	}
 	.internal-links a.active {
 		color: var(--accent);
 		font-weight: 600;

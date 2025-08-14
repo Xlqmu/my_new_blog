@@ -1,9 +1,7 @@
 ---
 import { getCollection } from "astro:content";
-import BaseHead from "../../components/BaseHead.astro";
-import Footer from "../../components/Footer.astro";
 import FormattedDate from "../../components/FormattedDate.astro";
-import Header from "../../components/Header.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
 const zuegEntries = await getCollection("zueg");
@@ -12,287 +10,275 @@ const sortedZueg = zuegEntries.sort(
 );
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-    <head>
-        <BaseHead
-            title={`随笔 | ${SITE_TITLE}`}
-            description={SITE_DESCRIPTION}
-        />
-    </head>
-    <body>
-        <Header />
-        <main class="container mx-auto px-4 py-12">
-            <div class="max-w-4xl mx-auto">
-                <h1
-                    class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100"
-                >
-                    随笔
-                </h1>
-                <p class="text-lg mb-8 text-gray-700 dark:text-gray-300">
-                    这里记录我的技术思考、项目经验和个人感悟。
-                </p>
+<BaseLayout title={`随笔 | ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
+    <main class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto">
+            <h1
+                class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100"
+            >
+                随笔
+            </h1>
+            <p class="text-lg mb-8 text-gray-700 dark:text-gray-300">
+                这里记录我的技术思考、项目经验和个人感悟。
+            </p>
 
-                <!-- 分类过滤器 -->
-                <div class="flex flex-wrap gap-3 mb-8">
-                    <button
-                        onclick="filterByCategory('all')"
-                        id="filter-all"
-                        class="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition filter-btn"
-                    >
-                        <span class="flex items-center">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-4 w-4 mr-1"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                                ></path>
-                            </svg>
-                            全部
-                        </span>
-                    </button>
-                    <button
-                        onclick="filterByCategory('编程')"
-                        id="filter-programming"
-                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition filter-btn"
-                    >
-                        <span class="flex items-center">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-4 w-4 mr-1"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-                                ></path>
-                            </svg>
-                            编程
-                        </span>
-                    </button>
-                    <button
-                        onclick="filterByCategory('人生思考')"
-                        id="filter-thinking"
-                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition filter-btn"
-                    >
-                        <span class="flex items-center">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-4 w-4 mr-1"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                                ></path>
-                            </svg>
-                            思考
-                        </span>
-                    </button>
-                </div>
-
-                <!-- 随笔文章网格 -->
-                <div
-                    class="grid grid-cols-1 md:grid-cols-2 gap-8"
-                    id="articles-grid"
+            <!-- 分类过滤器 -->
+            <div class="flex flex-wrap gap-3 mb-8">
+                <button
+                    onclick="filterByCategory('all')"
+                    id="filter-all"
+                    class="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition filter-btn"
                 >
-                    {
-                        sortedZueg.map((entry) => (
-                            <div
-                                class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition article-card"
-                                data-category={entry.data.category || "随笔"}
-                            >
-                                <a href={`/zueg/${entry.id}`}>
-                                    <img
-                                        src="/images/projects/placeholder-image.svg"
-                                        alt={entry.data.title}
-                                        class="w-full h-48 object-cover"
-                                    />
-                                    <div class="p-5">
-                                        <div class="flex justify-between items-center mb-2">
-                                            <span class="text-sm text-blue-500 font-medium">
-                                                {entry.data.category || "随笔"}
-                                            </span>
-                                            <span class="text-sm text-gray-500 dark:text-gray-400">
-                                                <FormattedDate
-                                                    date={entry.data.pubDate}
-                                                />
-                                            </span>
-                                        </div>
-                                        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">
-                                            {entry.data.title}
-                                        </h3>
-                                        <p class="text-gray-700 dark:text-gray-300">
-                                            {entry.data.description}
-                                        </p>
-                                        {entry.data.readingTime && (
-                                            <div class="mt-3 text-xs text-gray-500 dark:text-gray-400">
-                                                阅读时间：约{" "}
-                                                {entry.data.readingTime} 分钟
-                                            </div>
-                                        )}
-                                        {entry.data.tags && (
-                                            <div class="flex flex-wrap gap-1 mt-3">
-                                                {entry.data.tags
-                                                    .slice(0, 3)
-                                                    .map((tag) => (
-                                                        <span class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded">
-                                                            #{tag}
-                                                        </span>
-                                                    ))}
-                                            </div>
-                                        )}
+                    <span class="flex items-center">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4 mr-1"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                            ></path>
+                        </svg>
+                        全部
+                    </span>
+                </button>
+                <button
+                    onclick="filterByCategory('编程')"
+                    id="filter-programming"
+                    class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition filter-btn"
+                >
+                    <span class="flex items-center">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4 mr-1"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                            ></path>
+                        </svg>
+                        编程
+                    </span>
+                </button>
+                <button
+                    onclick="filterByCategory('人生思考')"
+                    id="filter-thinking"
+                    class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition filter-btn"
+                >
+                    <span class="flex items-center">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4 mr-1"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                            ></path>
+                        </svg>
+                        思考
+                    </span>
+                </button>
+            </div>
+
+            <!-- 随笔文章网格 -->
+            <div
+                class="grid grid-cols-1 md:grid-cols-2 gap-8"
+                id="articles-grid"
+            >
+                {
+                    sortedZueg.map((entry) => (
+                        <div
+                            class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition article-card"
+                            data-category={entry.data.category || "随笔"}
+                        >
+                            <a href={`/zueg/${entry.id}`}>
+                                <img
+                                    src={
+                                        typeof entry.data.heroImage === "string"
+                                            ? entry.data.heroImage
+                                            : entry.data.heroImage?.src ||
+                                              "/images/projects/placeholder-image.svg"
+                                    }
+                                    alt={entry.data.title}
+                                    class="w-full h-48 object-cover"
+                                />
+                                <div class="p-5">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-sm text-blue-500 font-medium">
+                                            {entry.data.category || "随笔"}
+                                        </span>
+                                        <span class="text-sm text-gray-500 dark:text-gray-400">
+                                            <FormattedDate
+                                                date={entry.data.pubDate}
+                                            />
+                                        </span>
                                     </div>
-                                </a>
-                            </div>
-                        ))
-                    }
-                </div>
-
-                <!-- 如果没有文章，显示提示 -->
-                {
-                    sortedZueg.length === 0 && (
-                        <div class="text-center py-12">
-                            <div class="text-gray-500 dark:text-gray-400 text-lg">
-                                还没有随笔文章，开始写第一篇吧！
-                            </div>
-                            <a
-                                href="/zueg/create"
-                                class="mt-4 inline-block px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-                            >
-                                写第一篇随笔
+                                    <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                                        {entry.data.title}
+                                    </h3>
+                                    <p class="text-gray-700 dark:text-gray-300">
+                                        {entry.data.description}
+                                    </p>
+                                    {entry.data.readingTime && (
+                                        <div class="mt-3 text-xs text-gray-500 dark:text-gray-400">
+                                            阅读时间：约{" "}
+                                            {entry.data.readingTime} 分钟
+                                        </div>
+                                    )}
+                                    {entry.data.tags && (
+                                        <div class="flex flex-wrap gap-1 mt-3">
+                                            {entry.data.tags
+                                                .slice(0, 3)
+                                                .map((tag) => (
+                                                    <span class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded">
+                                                        #{tag}
+                                                    </span>
+                                                ))}
+                                        </div>
+                                    )}
+                                </div>
                             </a>
                         </div>
-                    )
-                }
-
-                <!-- 分页 -->
-                {
-                    sortedZueg.length > 0 && (
-                        <div class="flex justify-center items-center space-x-2 mt-12">
-                            <a
-                                href="#"
-                                class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
-                            >
-                                上一页
-                            </a>
-                            <span class="px-4 py-2 bg-blue-500 text-white rounded">
-                                1
-                            </span>
-                            <a
-                                href="#"
-                                class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
-                            >
-                                2
-                            </a>
-                            <a
-                                href="#"
-                                class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
-                            >
-                                3
-                            </a>
-                            <span class="px-2">...</span>
-                            <a
-                                href="#"
-                                class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
-                            >
-                                10
-                            </a>
-                            <a
-                                href="#"
-                                class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
-                            >
-                                下一页
-                            </a>
-                        </div>
-                    )
+                    ))
                 }
             </div>
-        </main>
-        <Footer />
 
-        <script is:inline>
-            function filterByCategory(category) {
-                const articles = document.querySelectorAll(".article-card");
-                const buttons = document.querySelectorAll(".filter-btn");
-
-                // 更新按钮样式
-                buttons.forEach((btn) => {
-                    btn.classList.remove("bg-blue-500", "text-white");
-                    btn.classList.add(
-                        "bg-gray-200",
-                        "dark:bg-gray-700",
-                        "text-gray-800",
-                        "dark:text-gray-200",
-                    );
-                });
-
-                // 高亮当前选中的按钮
-                const filterAll = document.getElementById("filter-all");
-                const filterProgramming =
-                    document.getElementById("filter-programming");
-                const filterThinking =
-                    document.getElementById("filter-thinking");
-
-                if (category === "all" && filterAll) {
-                    filterAll.classList.remove(
-                        "bg-gray-200",
-                        "dark:bg-gray-700",
-                        "text-gray-800",
-                        "dark:text-gray-200",
-                    );
-                    filterAll.classList.add("bg-blue-500", "text-white");
-                } else if (category === "编程" && filterProgramming) {
-                    filterProgramming.classList.remove(
-                        "bg-gray-200",
-                        "dark:bg-gray-700",
-                        "text-gray-800",
-                        "dark:text-gray-200",
-                    );
-                    filterProgramming.classList.add(
-                        "bg-blue-500",
-                        "text-white",
-                    );
-                } else if (category === "人生思考" && filterThinking) {
-                    filterThinking.classList.remove(
-                        "bg-gray-200",
-                        "dark:bg-gray-700",
-                        "text-gray-800",
-                        "dark:text-gray-200",
-                    );
-                    filterThinking.classList.add("bg-blue-500", "text-white");
-                }
-
-                // 过滤文章
-                articles.forEach((article) => {
-                    if (category === "all") {
-                        article.style.display = "block";
-                    } else {
-                        const articleCategory =
-                            article.getAttribute("data-category");
-                        if (articleCategory === category) {
-                            article.style.display = "block";
-                        } else {
-                            article.style.display = "none";
-                        }
-                    }
-                });
+            <!-- 如果没有文章，显示提示 -->
+            {
+                sortedZueg.length === 0 && (
+                    <div class="text-center py-12">
+                        <div class="text-gray-500 dark:text-gray-400 text-lg">
+                            还没有随笔文章，开始写第一篇吧！
+                        </div>
+                        <a
+                            href="/zueg/create"
+                            class="mt-4 inline-block px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+                        >
+                            写第一篇随笔
+                        </a>
+                    </div>
+                )
             }
-        </script>
-    </body>
-</html>
+
+            <!-- 分页 -->
+            {
+                sortedZueg.length > 0 && (
+                    <div class="flex justify-center items-center space-x-2 mt-12">
+                        <a
+                            href="#"
+                            class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >
+                            上一页
+                        </a>
+                        <span class="px-4 py-2 bg-blue-500 text-white rounded">
+                            1
+                        </span>
+                        <a
+                            href="#"
+                            class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >
+                            2
+                        </a>
+                        <a
+                            href="#"
+                            class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >
+                            3
+                        </a>
+                        <span class="px-2">...</span>
+                        <a
+                            href="#"
+                            class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >
+                            10
+                        </a>
+                        <a
+                            href="#"
+                            class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >
+                            下一页
+                        </a>
+                    </div>
+                )
+            }
+        </div>
+    </main>
+</BaseLayout>
+
+<script is:inline>
+    function filterByCategory(category) {
+        const articles = document.querySelectorAll(".article-card");
+        const buttons = document.querySelectorAll(".filter-btn");
+
+        // 更新按钮样式
+        buttons.forEach((btn) => {
+            btn.classList.remove("bg-blue-500", "text-white");
+            btn.classList.add(
+                "bg-gray-200",
+                "dark:bg-gray-700",
+                "text-gray-800",
+                "dark:text-gray-200",
+            );
+        });
+
+        // 高亮当前选中的按钮
+        const filterAll = document.getElementById("filter-all");
+        const filterProgramming = document.getElementById("filter-programming");
+        const filterThinking = document.getElementById("filter-thinking");
+
+        if (category === "all" && filterAll) {
+            filterAll.classList.remove(
+                "bg-gray-200",
+                "dark:bg-gray-700",
+                "text-gray-800",
+                "dark:text-gray-200",
+            );
+            filterAll.classList.add("bg-blue-500", "text-white");
+        } else if (category === "编程" && filterProgramming) {
+            filterProgramming.classList.remove(
+                "bg-gray-200",
+                "dark:bg-gray-700",
+                "text-gray-800",
+                "dark:text-gray-200",
+            );
+            filterProgramming.classList.add("bg-blue-500", "text-white");
+        } else if (category === "人生思考" && filterThinking) {
+            filterThinking.classList.remove(
+                "bg-gray-200",
+                "dark:bg-gray-700",
+                "text-gray-800",
+                "dark:text-gray-200",
+            );
+            filterThinking.classList.add("bg-blue-500", "text-white");
+        }
+
+        // 过滤文章
+        articles.forEach((article) => {
+            if (category === "all") {
+                article.style.display = "block";
+            } else {
+                const articleCategory = article.getAttribute("data-category");
+                if (articleCategory === category) {
+                    article.style.display = "block";
+                } else {
+                    article.style.display = "none";
+                }
+            }
+        });
+    }
+</script>

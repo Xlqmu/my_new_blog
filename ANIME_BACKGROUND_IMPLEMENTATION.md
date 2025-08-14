@@ -43,7 +43,7 @@ src/
 
 public/
 ├── images/anime-bg/
-│   ├── anime-bg-1.svg             # 默认樱花背景
+│   ├──              # 默认樱花背景
 │   ├── anime-city.svg             # 城市背景
 │   ├── sunset-field.svg           # 夕阳背景
 │   ├── cherry-blossom.svg         # 樱花特写

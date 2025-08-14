@@ -1,266 +1,122 @@
 ---
-import BaseHead from "../../components/BaseHead.astro";
-import Footer from "../../components/Footer.astro";
-import Header from "../../components/Header.astro";
+import { getCollection } from "astro:content";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// 获取所有博客文章
+const posts = await getCollection("blog");
+
+// 按年份和月份组织文章
+const postsByYear: Record<string, Record<string, typeof posts>> = {};
+
+posts.forEach((post) => {
+    const year = post.data.pubDate.getFullYear().toString();
+    const month = (post.data.pubDate.getMonth() + 1)
+        .toString()
+        .padStart(2, "0");
+
+    if (!postsByYear[year]) {
+        postsByYear[year] = {};
+    }
+    if (!postsByYear[year][month]) {
+        postsByYear[year][month] = [];
+    }
+    postsByYear[year][month].push(post);
+});
+
+// 按时间排序
+Object.keys(postsByYear).forEach((year) => {
+    Object.keys(postsByYear[year]).forEach((month) => {
+        postsByYear[year][month].sort(
+            (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+        );
+    });
+});
+
+// 获取所有年份并排序
+const allYears = Object.keys(postsByYear).sort(
+    (a, b) => parseInt(b) - parseInt(a),
+);
+
+// 月份名称映射
+const monthNames = [
+    "一月",
+    "二月",
+    "三月",
+    "四月",
+    "五月",
+    "六月",
+    "七月",
+    "八月",
+    "九月",
+    "十月",
+    "十一月",
+    "十二月",
+];
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-    <head>
-        <BaseHead
-            title={`归档 | ${SITE_TITLE}`}
-            description={SITE_DESCRIPTION}
-        />
-    </head>
-    <body>
-        <Header />
-        <main class="container mx-auto px-4 py-12">
-            <div class="max-w-4xl mx-auto">
-                <h1
-                    class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100"
-                >
-                    博客归档
-                </h1>
-                <p class="text-lg mb-8 text-gray-700 dark:text-gray-300">
-                    按时间浏览所有文章。
-                </p>
+<BaseLayout title={`归档 | ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
+    <main class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto">
+            <h1
+                class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100"
+            >
+                博客归档
+            </h1>
+            <p class="text-lg mb-8 text-gray-700 dark:text-gray-300">
+                按时间浏览所有文章。
+            </p>
 
-                <div class="space-y-16">
-                    <!-- 2025年 -->
-                    <div>
-                        <h2
-                            class="text-2xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100"
-                        >
-                            2025年
-                        </h2>
+            <div class="space-y-16">
+                {
+                    allYears.map((year) => (
+                        <div>
+                            <h2 class="text-2xl font-bold mb-6 border-b pb-2 border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100">
+                                {year}年
+                            </h2>
 
-                        <!-- 8月 -->
-                        <div class="mb-8">
-                            <h3
-                                class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-200"
-                            >
-                                八月
-                            </h3>
-                            <ul class="space-y-2">
-                                <li
-                                    class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-2 border-gray-100 dark:border-gray-800"
-                                >
-                                    <a
-                                        href="/blog/javascript-best-practices"
-                                        class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
-                                    >
-                                        JavaScript最佳实践：提高代码质量的20个技巧
-                                    </a>
-                                    <span
-                                        class="text-sm text-gray-500 dark:text-gray-400"
-                                        >2025-08-12</span
-                                    >
-                                </li>
-                                <li
-                                    class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-2 border-gray-100 dark:border-gray-800"
-                                >
-                                    <a
-                                        href="/blog/react-18-features"
-                                        class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
-                                    >
-                                        深入了解React 18新特性及其实践应用
-                                    </a>
-                                    <span
-                                        class="text-sm text-gray-500 dark:text-gray-400"
-                                        >2025-08-05</span
-                                    >
-                                </li>
-                                <li
-                                    class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-2 border-gray-100 dark:border-gray-800"
-                                >
-                                    <a
-                                        href="/blog/astro-blog-tutorial"
-                                        class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
-                                    >
-                                        使用Astro构建现代博客网站的完整指南
-                                    </a>
-                                    <span
-                                        class="text-sm text-gray-500 dark:text-gray-400"
-                                        >2025-08-01</span
-                                    >
-                                </li>
-                            </ul>
+                            {Object.keys(postsByYear[year])
+                                .sort((a, b) => parseInt(b) - parseInt(a))
+                                .map((month) => (
+                                    <div class="mb-8">
+                                        <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-200">
+                                            {monthNames[parseInt(month) - 1]}
+                                        </h3>
+                                        <ul class="space-y-2">
+                                            {postsByYear[year][month].map(
+                                                (post) => (
+                                                    <li class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-2 border-gray-100 dark:border-gray-800">
+                                                        <a
+                                                            href={`/blog/${post.id}`}
+                                                            class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
+                                                        >
+                                                            {post.data.title}
+                                                        </a>
+                                                        <span class="text-sm text-gray-500 dark:text-gray-400">
+                                                            {post.data.pubDate.toLocaleDateString(
+                                                                "zh-CN",
+                                                            )}
+                                                        </span>
+                                                    </li>
+                                                ),
+                                            )}
+                                        </ul>
+                                    </div>
+                                ))}
                         </div>
+                    ))
+                }
 
-                        <!-- 7月 -->
-                        <div class="mb-8">
-                            <h3
-                                class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-200"
-                            >
-                                七月
-                            </h3>
-                            <ul class="space-y-2">
-                                <li
-                                    class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-2 border-gray-100 dark:border-gray-800"
-                                >
-                                    <a
-                                        href="/blog/typescript-advanced"
-                                        class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
-                                    >
-                                        TypeScript高级类型和模式：让你的代码更安全
-                                    </a>
-                                    <span
-                                        class="text-sm text-gray-500 dark:text-gray-400"
-                                        >2025-07-25</span
-                                    >
-                                </li>
-                                <li
-                                    class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-2 border-gray-100 dark:border-gray-800"
-                                >
-                                    <a
-                                        href="/blog/css-grid-layout"
-                                        class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
-                                    >
-                                        CSS Grid布局实战：构建复杂响应式页面
-                                    </a>
-                                    <span
-                                        class="text-sm text-gray-500 dark:text-gray-400"
-                                        >2025-07-18</span
-                                    >
-                                </li>
-                                <li
-                                    class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-2 border-gray-100 dark:border-gray-800"
-                                >
-                                    <a
-                                        href="/blog/web-performance"
-                                        class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
-                                    >
-                                        Web性能优化：加载速度提升200%的技巧
-                                    </a>
-                                    <span
-                                        class="text-sm text-gray-500 dark:text-gray-400"
-                                        >2025-07-10</span
-                                    >
-                                </li>
-                                <li
-                                    class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-2 border-gray-100 dark:border-gray-800"
-                                >
-                                    <a
-                                        href="/blog/tailwind-vs-css"
-                                        class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
-                                    >
-                                        Tailwind CSS vs 传统CSS：优缺点分析
-                                    </a>
-                                    <span
-                                        class="text-sm text-gray-500 dark:text-gray-400"
-                                        >2025-07-05</span
-                                    >
-                                </li>
-                            </ul>
+                {
+                    allYears.length === 0 && (
+                        <div class="text-center py-12">
+                            <p class="text-gray-500 dark:text-gray-400">
+                                暂无文章
+                            </p>
                         </div>
-
-                        <!-- 6月 -->
-                        <div class="mb-8">
-                            <h3
-                                class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-200"
-                            >
-                                六月
-                            </h3>
-                            <ul class="space-y-2">
-                                <li
-                                    class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-2 border-gray-100 dark:border-gray-800"
-                                >
-                                    <a
-                                        href="/blog/node-js-microservices"
-                                        class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
-                                    >
-                                        使用Node.js构建微服务架构
-                                    </a>
-                                    <span
-                                        class="text-sm text-gray-500 dark:text-gray-400"
-                                        >2025-06-28</span
-                                    >
-                                </li>
-                                <li
-                                    class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-2 border-gray-100 dark:border-gray-800"
-                                >
-                                    <a
-                                        href="/blog/docker-for-developers"
-                                        class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
-                                    >
-                                        开发者必学的Docker基础与实践
-                                    </a>
-                                    <span
-                                        class="text-sm text-gray-500 dark:text-gray-400"
-                                        >2025-06-20</span
-                                    >
-                                </li>
-                                <li
-                                    class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-2 border-gray-100 dark:border-gray-800"
-                                >
-                                    <a
-                                        href="/blog/git-workflow"
-                                        class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
-                                    >
-                                        团队Git工作流：最佳实践和常见问题解决
-                                    </a>
-                                    <span
-                                        class="text-sm text-gray-500 dark:text-gray-400"
-                                        >2025-06-15</span
-                                    >
-                                </li>
-                                <li
-                                    class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-2 border-gray-100 dark:border-gray-800"
-                                >
-                                    <a
-                                        href="/blog/vue-3-composition-api"
-                                        class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
-                                    >
-                                        Vue 3 Composition API：实用指南
-                                    </a>
-                                    <span
-                                        class="text-sm text-gray-500 dark:text-gray-400"
-                                        >2025-06-08</span
-                                    >
-                                </li>
-                                <li
-                                    class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-2 border-gray-100 dark:border-gray-800"
-                                >
-                                    <a
-                                        href="/blog/graphql-rest-comparison"
-                                        class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
-                                    >
-                                        GraphQL vs REST：何时使用哪种API风格
-                                    </a>
-                                    <span
-                                        class="text-sm text-gray-500 dark:text-gray-400"
-                                        >2025-06-02</span
-                                    >
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- 年份选择器 -->
-                    <div class="flex flex-wrap gap-2">
-                        <a
-                            href="/blog/archive?year=2025"
-                            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-                        >
-                            2025
-                        </a>
-                        <a
-                            href="/blog/archive?year=2024"
-                            class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
-                        >
-                            2024
-                        </a>
-                        <a
-                            href="/blog/archive?year=2023"
-                            class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
-                        >
-                            2023
-                        </a>
-                    </div>
-                </div>
+                    )
+                }
             </div>
-        </main>
-        <Footer />
-    </body>
-</html>
+        </div>
+    </main>
+</BaseLayout>

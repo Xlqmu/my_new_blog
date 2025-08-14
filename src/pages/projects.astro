@@ -1,400 +1,381 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 import { SITE_DESCRIPTION } from "../consts";
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-    <head>
-        <BaseHead title="项目展示" description={SITE_DESCRIPTION} />
-    </head>
-    <body>
-        <Header />
+<BaseLayout title="项目展示" description={SITE_DESCRIPTION}>
+    <main>
+        <section class="projects-hero py-16 text-center">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl font-bold mb-4">项目展示</h1>
+                <p class="text-xl max-w-2xl mx-auto text-gray-600">
+                    这里展示了我的一些个人项目和作品
+                </p>
+            </div>
+        </section>
 
-        <main>
-            <section class="projects-hero py-16 text-center">
-                <div class="container mx-auto px-4">
-                    <h1 class="text-4xl font-bold mb-4">项目展示</h1>
-                    <p class="text-xl max-w-2xl mx-auto text-gray-600">
-                        这里展示了我的一些个人项目和作品
-                    </p>
-                </div>
-            </section>
+        <section class="projects-content py-10">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                    <!-- 项目卡片 1 -->
+                    <div class="project-card">
+                        <div class="project-image mb-4">
+                            <img
+                                src="/placeholder-project.jpg"
+                                alt="项目截图"
+                                class="rounded-lg w-full h-48 object-cover"
+                                onerror="this.src='https://via.placeholder.com/600x400?text=项目图片'"
+                            />
+                        </div>
+                        <h2 class="text-2xl font-bold mb-2">个人博客网站</h2>
+                        <p class="text-gray-600 mb-4">
+                            基于 Astro 构建的个人博客网站，使用 TailwindCSS
+                            进行样式设计，支持 Markdown 和 MDX 内容创作。
+                        </p>
 
-            <section class="projects-content py-10">
-                <div class="container mx-auto px-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                        <!-- 项目卡片 1 -->
-                        <div class="project-card">
-                            <div class="project-image mb-4">
-                                <img
-                                    src="/placeholder-project.jpg"
-                                    alt="项目截图"
-                                    class="rounded-lg w-full h-48 object-cover"
-                                    onerror="this.src='https://via.placeholder.com/600x400?text=项目图片'"
-                                />
-                            </div>
-                            <h2 class="text-2xl font-bold mb-2">
-                                个人博客网站
-                            </h2>
-                            <p class="text-gray-600 mb-4">
-                                基于 Astro 构建的个人博客网站，使用 TailwindCSS
-                                进行样式设计，支持 Markdown 和 MDX 内容创作。
-                            </p>
-
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="tag">Astro</span>
-                                <span class="tag">TailwindCSS</span>
-                                <span class="tag">Markdown</span>
-                                <span class="tag">响应式设计</span>
-                            </div>
-
-                            <div class="project-links flex gap-4">
-                                <a href="#" class="text-accent hover:underline">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="icon icon-tabler icon-tabler-brand-github inline-block mr-1"
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <path
-                                            stroke="none"
-                                            d="M0 0h24v24H0z"
-                                            fill="none"></path>
-                                        <path
-                                            d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"
-                                        ></path>
-                                    </svg>
-                                    GitHub 仓库
-                                </a>
-                                <a href="#" class="text-accent hover:underline">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="icon icon-tabler icon-tabler-external-link inline-block mr-1"
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <path
-                                            stroke="none"
-                                            d="M0 0h24v24H0z"
-                                            fill="none"></path>
-                                        <path
-                                            d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"
-                                        ></path>
-                                        <path d="M11 13l9 -9"></path>
-                                        <path d="M15 4h5v5"></path>
-                                    </svg>
-                                    在线预览
-                                </a>
-                            </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tag">Astro</span>
+                            <span class="tag">TailwindCSS</span>
+                            <span class="tag">Markdown</span>
+                            <span class="tag">响应式设计</span>
                         </div>
 
-                        <!-- 项目卡片 2 -->
-                        <div class="project-card">
-                            <div class="project-image mb-4">
-                                <img
-                                    src="/placeholder-project.jpg"
-                                    alt="项目截图"
-                                    class="rounded-lg w-full h-48 object-cover"
-                                    onerror="this.src='https://via.placeholder.com/600x400?text=项目图片'"
-                                />
-                            </div>
-                            <h2 class="text-2xl font-bold mb-2">
-                                任务管理应用
-                            </h2>
-                            <p class="text-gray-600 mb-4">
-                                一个基于 React 和 TypeScript
-                                开发的任务管理应用，支持任务创建、编辑、删除和状态管理等功能。
-                            </p>
-
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="tag">React</span>
-                                <span class="tag">TypeScript</span>
-                                <span class="tag">Redux</span>
-                                <span class="tag">Firebase</span>
-                            </div>
-
-                            <div class="project-links flex gap-4">
-                                <a href="#" class="text-accent hover:underline">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="icon icon-tabler icon-tabler-brand-github inline-block mr-1"
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <path
-                                            stroke="none"
-                                            d="M0 0h24v24H0z"
-                                            fill="none"></path>
-                                        <path
-                                            d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"
-                                        ></path>
-                                    </svg>
-                                    GitHub 仓库
-                                </a>
-                                <a href="#" class="text-accent hover:underline">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="icon icon-tabler icon-tabler-external-link inline-block mr-1"
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <path
-                                            stroke="none"
-                                            d="M0 0h24v24H0z"
-                                            fill="none"></path>
-                                        <path
-                                            d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"
-                                        ></path>
-                                        <path d="M11 13l9 -9"></path>
-                                        <path d="M15 4h5v5"></path>
-                                    </svg>
-                                    在线预览
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- 项目卡片 3 -->
-                        <div class="project-card">
-                            <div class="project-image mb-4">
-                                <img
-                                    src="/placeholder-project.jpg"
-                                    alt="项目截图"
-                                    class="rounded-lg w-full h-48 object-cover"
-                                    onerror="this.src='https://via.placeholder.com/600x400?text=项目图片'"
-                                />
-                            </div>
-                            <h2 class="text-2xl font-bold mb-2">
-                                数据可视化面板
-                            </h2>
-                            <p class="text-gray-600 mb-4">
-                                使用 Vue.js 和 ECharts
-                                实现的数据可视化面板，支持多种图表类型和数据筛选功能。
-                            </p>
-
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="tag">Vue.js</span>
-                                <span class="tag">ECharts</span>
-                                <span class="tag">数据可视化</span>
-                            </div>
-
-                            <div class="project-links flex gap-4">
-                                <a href="#" class="text-accent hover:underline">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="icon icon-tabler icon-tabler-brand-github inline-block mr-1"
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <path
-                                            stroke="none"
-                                            d="M0 0h24v24H0z"
-                                            fill="none"></path>
-                                        <path
-                                            d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"
-                                        ></path>
-                                    </svg>
-                                    GitHub 仓库
-                                </a>
-                                <a href="#" class="text-accent hover:underline">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="icon icon-tabler icon-tabler-external-link inline-block mr-1"
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <path
-                                            stroke="none"
-                                            d="M0 0h24v24H0z"
-                                            fill="none"></path>
-                                        <path
-                                            d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"
-                                        ></path>
-                                        <path d="M11 13l9 -9"></path>
-                                        <path d="M15 4h5v5"></path>
-                                    </svg>
-                                    在线预览
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- 项目卡片 4 -->
-                        <div class="project-card">
-                            <div class="project-image mb-4">
-                                <img
-                                    src="/placeholder-project.jpg"
-                                    alt="项目截图"
-                                    class="rounded-lg w-full h-48 object-cover"
-                                    onerror="this.src='https://via.placeholder.com/600x400?text=项目图片'"
-                                />
-                            </div>
-                            <h2 class="text-2xl font-bold mb-2">API 服务</h2>
-                            <p class="text-gray-600 mb-4">
-                                使用 Node.js 和 Express 开发的 RESTful API
-                                服务，提供数据存储、查询和身份验证等功能。
-                            </p>
-
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="tag">Node.js</span>
-                                <span class="tag">Express</span>
-                                <span class="tag">MongoDB</span>
-                                <span class="tag">JWT</span>
-                            </div>
-
-                            <div class="project-links flex gap-4">
-                                <a href="#" class="text-accent hover:underline">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="icon icon-tabler icon-tabler-brand-github inline-block mr-1"
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <path
-                                            stroke="none"
-                                            d="M0 0h24v24H0z"
-                                            fill="none"></path>
-                                        <path
-                                            d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"
-                                        ></path>
-                                    </svg>
-                                    GitHub 仓库
-                                </a>
-                                <a href="#" class="text-accent hover:underline">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="icon icon-tabler icon-tabler-file-text inline-block mr-1"
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
-                                        fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <path
-                                            stroke="none"
-                                            d="M0 0h24v24H0z"
-                                            fill="none"></path>
-                                        <path d="M14 3v4a1 1 0 0 0 1 1h4"
-                                        ></path>
-                                        <path
-                                            d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"
-                                        ></path>
-                                        <path d="M9 9l1 0"></path>
-                                        <path d="M9 13l6 0"></path>
-                                        <path d="M9 17l6 0"></path>
-                                    </svg>
-                                    API 文档
-                                </a>
-                            </div>
+                        <div class="project-links flex gap-4">
+                            <a href="#" class="text-accent hover:underline">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-brand-github inline-block mr-1"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"></path>
+                                    <path
+                                        d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"
+                                    ></path>
+                                </svg>
+                                GitHub 仓库
+                            </a>
+                            <a href="#" class="text-accent hover:underline">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-external-link inline-block mr-1"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"></path>
+                                    <path
+                                        d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"
+                                    ></path>
+                                    <path d="M11 13l9 -9"></path>
+                                    <path d="M15 4h5v5"></path>
+                                </svg>
+                                在线预览
+                            </a>
                         </div>
                     </div>
 
-                    <!-- 开源贡献 -->
-                    <div class="open-source mb-12">
-                        <h2 class="text-3xl font-bold mb-6">开源贡献</h2>
-                        <div class="bg-white rounded-lg p-6 shadow-md">
-                            <p class="mb-4">我还参与了以下开源项目的贡献：</p>
-                            <ul class="list-disc pl-6 mb-4">
-                                <li class="mb-2">
-                                    <a
-                                        href="#"
-                                        class="text-accent hover:underline font-medium"
-                                        >开源项目名称</a
-                                    > - 添加了新功能和修复了一些 bug。
-                                </li>
-                                <li class="mb-2">
-                                    <a
-                                        href="#"
-                                        class="text-accent hover:underline font-medium"
-                                        >另一个开源项目</a
-                                    > - 改进了文档和单元测试。
-                                </li>
-                                <!-- 添加更多开源贡献 -->
-                            </ul>
-                            <p>
-                                如果你对我的项目有任何建议或想要合作，请随时联系我！
-                            </p>
+                    <!-- 项目卡片 2 -->
+                    <div class="project-card">
+                        <div class="project-image mb-4">
+                            <img
+                                src="/placeholder-project.jpg"
+                                alt="项目截图"
+                                class="rounded-lg w-full h-48 object-cover"
+                                onerror="this.src='https://via.placeholder.com/600x400?text=项目图片'"
+                            />
+                        </div>
+                        <h2 class="text-2xl font-bold mb-2">任务管理应用</h2>
+                        <p class="text-gray-600 mb-4">
+                            一个基于 React 和 TypeScript
+                            开发的任务管理应用，支持任务创建、编辑、删除和状态管理等功能。
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tag">React</span>
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">Redux</span>
+                            <span class="tag">Firebase</span>
+                        </div>
+
+                        <div class="project-links flex gap-4">
+                            <a href="#" class="text-accent hover:underline">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-brand-github inline-block mr-1"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"></path>
+                                    <path
+                                        d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"
+                                    ></path>
+                                </svg>
+                                GitHub 仓库
+                            </a>
+                            <a href="#" class="text-accent hover:underline">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-external-link inline-block mr-1"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"></path>
+                                    <path
+                                        d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"
+                                    ></path>
+                                    <path d="M11 13l9 -9"></path>
+                                    <path d="M15 4h5v5"></path>
+                                </svg>
+                                在线预览
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 项目卡片 3 -->
+                    <div class="project-card">
+                        <div class="project-image mb-4">
+                            <img
+                                src="/placeholder-project.jpg"
+                                alt="项目截图"
+                                class="rounded-lg w-full h-48 object-cover"
+                                onerror="this.src='https://via.placeholder.com/600x400?text=项目图片'"
+                            />
+                        </div>
+                        <h2 class="text-2xl font-bold mb-2">数据可视化面板</h2>
+                        <p class="text-gray-600 mb-4">
+                            使用 Vue.js 和 ECharts
+                            实现的数据可视化面板，支持多种图表类型和数据筛选功能。
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tag">Vue.js</span>
+                            <span class="tag">ECharts</span>
+                            <span class="tag">数据可视化</span>
+                        </div>
+
+                        <div class="project-links flex gap-4">
+                            <a href="#" class="text-accent hover:underline">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-brand-github inline-block mr-1"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"></path>
+                                    <path
+                                        d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"
+                                    ></path>
+                                </svg>
+                                GitHub 仓库
+                            </a>
+                            <a href="#" class="text-accent hover:underline">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-external-link inline-block mr-1"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"></path>
+                                    <path
+                                        d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6"
+                                    ></path>
+                                    <path d="M11 13l9 -9"></path>
+                                    <path d="M15 4h5v5"></path>
+                                </svg>
+                                在线预览
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 项目卡片 4 -->
+                    <div class="project-card">
+                        <div class="project-image mb-4">
+                            <img
+                                src="/placeholder-project.jpg"
+                                alt="项目截图"
+                                class="rounded-lg w-full h-48 object-cover"
+                                onerror="this.src='https://via.placeholder.com/600x400?text=项目图片'"
+                            />
+                        </div>
+                        <h2 class="text-2xl font-bold mb-2">API 服务</h2>
+                        <p class="text-gray-600 mb-4">
+                            使用 Node.js 和 Express 开发的 RESTful API
+                            服务，提供数据存储、查询和身份验证等功能。
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tag">Node.js</span>
+                            <span class="tag">Express</span>
+                            <span class="tag">MongoDB</span>
+                            <span class="tag">JWT</span>
+                        </div>
+
+                        <div class="project-links flex gap-4">
+                            <a href="#" class="text-accent hover:underline">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-brand-github inline-block mr-1"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"></path>
+                                    <path
+                                        d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"
+                                    ></path>
+                                </svg>
+                                GitHub 仓库
+                            </a>
+                            <a href="#" class="text-accent hover:underline">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="icon icon-tabler icon-tabler-file-text inline-block mr-1"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"></path>
+                                    <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+                                    <path
+                                        d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"
+                                    ></path>
+                                    <path d="M9 9l1 0"></path>
+                                    <path d="M9 13l6 0"></path>
+                                    <path d="M9 17l6 0"></path>
+                                </svg>
+                                API 文档
+                            </a>
                         </div>
                     </div>
                 </div>
-            </section>
-        </main>
 
-        <Footer />
+                <!-- 开源贡献 -->
+                <div class="open-source mb-12">
+                    <h2 class="text-3xl font-bold mb-6">开源贡献</h2>
+                    <div class="bg-white rounded-lg p-6 shadow-md">
+                        <p class="mb-4">我还参与了以下开源项目的贡献：</p>
+                        <ul class="list-disc pl-6 mb-4">
+                            <li class="mb-2">
+                                <a
+                                    href="#"
+                                    class="text-accent hover:underline font-medium"
+                                    >开源项目名称</a
+                                > - 添加了新功能和修复了一些 bug。
+                            </li>
+                            <li class="mb-2">
+                                <a
+                                    href="#"
+                                    class="text-accent hover:underline font-medium"
+                                    >另一个开源项目</a
+                                > - 改进了文档和单元测试。
+                            </li>
+                            <!-- 添加更多开源贡献 -->
+                        </ul>
+                        <p>
+                            如果你对我的项目有任何建议或想要合作，请随时联系我！
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</BaseLayout>
 
-        <style>
-            .projects-hero {
-                background: linear-gradient(
-                    to bottom,
-                    rgba(var(--gray-light), 0.8),
-                    rgba(255, 255, 255, 0.8)
-                );
-                padding: 5rem 0;
-            }
-            .project-card {
-                background-color: white;
-                padding: 1.5rem;
-                border-radius: 0.5rem;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                transition: all 0.3s;
-            }
-            .project-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-            }
-            .tag {
-                background-color: rgba(var(--gray-light), 1);
-                padding: 0.25rem 0.5rem;
-                border-radius: 0.25rem;
-                font-size: 0.75rem;
-                color: rgb(var(--gray-dark));
-            }
-        </style>
-    </body>
-</html>
+<style>
+    .projects-hero {
+        background: linear-gradient(
+            to bottom,
+            rgba(var(--gray-light), 0.8),
+            rgba(255, 255, 255, 0.8)
+        );
+        padding: 5rem 0;
+    }
+    .project-card {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s;
+    }
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+    .tag {
+        background-color: rgba(var(--gray-light), 1);
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        font-size: 0.75rem;
+        color: rgb(var(--gray-dark));
+    }
+</style>

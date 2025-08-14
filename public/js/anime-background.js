@@ -2,11 +2,11 @@
 class AnimeBackgroundManager {
     constructor() {
         this.backgrounds = [
-            '/images/anime-bg/anime-bg-1.svg',
-            '/images/anime-bg/anime-city.svg',
-            '/images/anime-bg/sunset-field.svg',
-            '/images/anime-bg/cherry-blossom.svg',
-            '/images/anime-bg/anime-sky.svg'
+            '/images/hero-images/t1.svg',
+            '/images/hero-images/t2.svg',
+            '/images/hero-images/t3.svg',
+            '/images/hero-images/t4.svg',
+            '/images/hero-images/t5.svg'
         ];
         
         this.currentIndex = 0;

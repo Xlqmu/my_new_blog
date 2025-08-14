@@ -1,10 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
-import BaseHead from "../../components/BaseHead.astro";
-import Footer from "../../components/Footer.astro";
 import FormattedDate from "../../components/FormattedDate.astro";
-import Header from "../../components/Header.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
 const posts = (await getCollection("blog")).sort(
@@ -17,183 +15,166 @@ const allCategories = [
 ];
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-	<head>
-		<BaseHead title="博客文章" description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section class="blog-hero py-16 text-center">
-				<div class="container mx-auto px-4">
-					<h1 class="text-4xl font-bold mb-4">博客文章</h1>
-					<p class="text-xl max-w-2xl mx-auto text-gray-600">
-						我的所有博客文章合集
-					</p>
+<BaseLayout title="博客文章" description={SITE_DESCRIPTION}>
+	<main>
+		<section class="blog-hero py-16 text-center">
+			<div class="container mx-auto px-4">
+				<h1 class="text-4xl font-bold mb-4">博客文章</h1>
+				<p class="text-xl max-w-2xl mx-auto text-gray-600">
+					我的所有博客文章合集
+				</p>
+			</div>
+		</section>
+
+		<section class="blog-content py-10">
+			<div class="container mx-auto px-4">
+				<!-- 分类筛选 -->
+				<div
+					class="category-filter mb-8 flex flex-wrap justify-center gap-4"
+				>
+					<a href="#" class="category-link active" data-category="all"
+						>全部</a
+					>
+					{
+						allCategories.map((category) => (
+							<a
+								href="#"
+								class="category-link"
+								data-category={category}
+							>
+								{category}
+							</a>
+						))
+					}
 				</div>
-			</section>
 
-			<section class="blog-content py-10">
-				<div class="container mx-auto px-4">
-					<!-- 分类筛选 -->
-					<div
-						class="category-filter mb-8 flex flex-wrap justify-center gap-4"
-					>
-						<a
-							href="#"
-							class="category-link active"
-							data-category="all">全部</a
-						>
-						{
-							allCategories.map((category) => (
-								<a
-									href="#"
-									class="category-link"
-									data-category={category}
-								>
-									{category}
-								</a>
-							))
-						}
-					</div>
-
-					<!-- 文章列表 -->
-					<div
-						class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-					>
-						{
-							posts.map((post) => (
-								<article
-									class="post-card"
-									data-category={
-										post.data.category || "未分类"
-									}
-								>
-									<a href={`/blog/${post.id}/`} class="block">
-										{post.data.heroImage && (
-											<img
-												src={post.data.heroImage.src}
-												alt=""
-												class="w-full h-48 object-cover rounded-t-lg"
+				<!-- 文章列表 -->
+				<div
+					class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+				>
+					{
+						posts.map((post) => (
+							<article
+								class="post-card"
+								data-category={post.data.category || "未分类"}
+							>
+								<a href={`/blog/${post.id}/`} class="block">
+									{post.data.heroImage && (
+										<img
+											src={post.data.heroImage.src}
+											alt=""
+											class="w-full h-48 object-cover rounded-t-lg"
+										/>
+									)}
+									<div class="p-6">
+										<div class="post-meta mb-2 text-sm text-gray-600">
+											<span class="category">
+												{post.data.category || "未分类"}
+											</span>
+											<span class="mx-2">•</span>
+											<FormattedDate
+												date={post.data.pubDate}
 											/>
-										)}
-										<div class="p-6">
-											<div class="post-meta mb-2 text-sm text-gray-600">
-												<span class="category">
-													{post.data.category ||
-														"未分类"}
-												</span>
-												<span class="mx-2">•</span>
-												<FormattedDate
-													date={post.data.pubDate}
-												/>
-											</div>
-											<h2 class="title text-xl font-bold mb-3">
-												{post.data.title}
-											</h2>
-											<p class="text-gray-700 mb-4">
-												{post.data.description}
-											</p>
-											<div class="read-more text-accent font-medium">
-												阅读更多 →
-											</div>
-
-											{post.data.tags &&
-												post.data.tags.length > 0 && (
-													<div class="mt-4 flex flex-wrap gap-2">
-														{post.data.tags.map(
-															(tag: string) => (
-																<span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
-																	{tag}
-																</span>
-															),
-														)}
-													</div>
-												)}
 										</div>
-									</a>
-								</article>
-							))
-						}
-					</div>
+										<h2 class="title text-xl font-bold mb-3">
+											{post.data.title}
+										</h2>
+										<p class="text-gray-700 mb-4">
+											{post.data.description}
+										</p>
+										<div class="read-more text-accent font-medium">
+											阅读更多 →
+										</div>
+
+										{post.data.tags &&
+											post.data.tags.length > 0 && (
+												<div class="mt-4 flex flex-wrap gap-2">
+													{post.data.tags.map(
+														(tag: string) => (
+															<span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
+																{tag}
+															</span>
+														),
+													)}
+												</div>
+											)}
+									</div>
+								</a>
+							</article>
+						))
+					}
 				</div>
-			</section>
-		</main>
+			</div>
+		</section>
+	</main>
+	<style>
+		.blog-hero {
+			background: linear-gradient(
+				to bottom,
+				rgba(var(--gray-light), 0.8),
+				rgba(255, 255, 255, 0.8)
+			);
+			padding: 5rem 0;
+		}
+		.category-link {
+			padding: 0.5rem 1.5rem;
+			border-radius: 2rem;
+			background-color: white;
+			color: rgb(var(--gray-dark));
+			text-decoration: none;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			transition: all 0.2s ease;
+		}
+		.category-link:hover,
+		.category-link.active {
+			background-color: var(--accent);
+			color: white;
+		}
+		.post-card {
+			background-color: white;
+			border-radius: 0.5rem;
+			overflow: hidden;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			transition: all 0.3s ease;
+		}
+		.post-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+		}
+	</style>
 
-		<Footer />
+	<script>
+		// 分类筛选功能
+		document.addEventListener("DOMContentLoaded", () => {
+			const categoryLinks = document.querySelectorAll(".category-link");
+			const postCards = document.querySelectorAll(".post-card");
 
-		<style>
-			.blog-hero {
-				background: linear-gradient(
-					to bottom,
-					rgba(var(--gray-light), 0.8),
-					rgba(255, 255, 255, 0.8)
-				);
-				padding: 5rem 0;
-			}
-			.category-link {
-				padding: 0.5rem 1.5rem;
-				border-radius: 2rem;
-				background-color: white;
-				color: rgb(var(--gray-dark));
-				text-decoration: none;
-				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-				transition: all 0.2s ease;
-			}
-			.category-link:hover,
-			.category-link.active {
-				background-color: var(--accent);
-				color: white;
-			}
-			.post-card {
-				background-color: white;
-				border-radius: 0.5rem;
-				overflow: hidden;
-				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-				transition: all 0.3s ease;
-			}
-			.post-card:hover {
-				transform: translateY(-5px);
-				box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-			}
-		</style>
+			categoryLinks.forEach((link: Element) => {
+				link.addEventListener("click", (e: Event) => {
+					e.preventDefault();
 
-		<script>
-			// 分类筛选功能
-			document.addEventListener("DOMContentLoaded", () => {
-				const categoryLinks =
-					document.querySelectorAll(".category-link");
-				const postCards = document.querySelectorAll(".post-card");
+					// 移除所有激活状态
+					categoryLinks.forEach((l: Element) =>
+						l.classList.remove("active"),
+					);
+					// 添加当前激活状态
+					link.classList.add("active");
 
-				categoryLinks.forEach((link: Element) => {
-					link.addEventListener("click", (e: Event) => {
-						e.preventDefault();
+					const selectedCategory = link.getAttribute("data-category");
 
-						// 移除所有激活状态
-						categoryLinks.forEach((l: Element) =>
-							l.classList.remove("active"),
-						);
-						// 添加当前激活状态
-						link.classList.add("active");
-
-						const selectedCategory =
-							link.getAttribute("data-category");
-
-						postCards.forEach((card: Element) => {
-							if (
-								selectedCategory === "all" ||
-								card.getAttribute("data-category") ===
-									selectedCategory
-							) {
-								(card as HTMLElement).style.display = "block";
-							} else {
-								(card as HTMLElement).style.display = "none";
-							}
-						});
+					postCards.forEach((card: Element) => {
+						if (
+							selectedCategory === "all" ||
+							card.getAttribute("data-category") ===
+								selectedCategory
+						) {
+							(card as HTMLElement).style.display = "block";
+						} else {
+							(card as HTMLElement).style.display = "none";
+						}
 					});
 				});
 			});
-		</script>
-	</body>
-</html>
+		});
+	</script>
+</BaseLayout>

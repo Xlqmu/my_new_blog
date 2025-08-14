@@ -4,6 +4,7 @@ description: '分享学习 Web 开发的心得体会'
 pubDate: '2025-08-14'
 heroImage: '../../assets/blog-placeholder-1.jpg'
 category: '技术分享'
+series: 'Web开发入门'
 tags: ['Web开发', 'JavaScript', '学习笔记']
 ---
 
