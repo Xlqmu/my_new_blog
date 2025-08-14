@@ -1,13 +1,16 @@
 ---
-import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
+import Pagination from "../../components/Pagination.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import { paginate } from "../../utils/pagination.ts";
+import { SITE_DESCRIPTION } from "../../consts";
 
 const posts = (await getCollection("blog")).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const { items: paginatedPosts, pagination } = paginate(posts, 1, 5);
 
 // 获取所有分类
 const allCategories = [
@@ -20,7 +23,9 @@ const allCategories = [
 		<section class="blog-hero py-16 text-center">
 			<div class="container mx-auto px-4">
 				<h1 class="text-4xl font-bold mb-4">博客文章</h1>
-				<p class="text-xl max-w-2xl mx-auto text-gray-600">
+				<p
+					class="text-xl max-w-2xl mx-auto text-gray-600 dark:text-gray-300"
+				>
 					我的所有博客文章合集
 				</p>
 			</div>
@@ -32,8 +37,10 @@ const allCategories = [
 				<div
 					class="category-filter mb-8 flex flex-wrap justify-center gap-4"
 				>
-					<a href="#" class="category-link active" data-category="all"
-						>全部</a
+					<a
+						href="/blog"
+						class="category-link active"
+						data-category="all">全部</a
 					>
 					{
 						allCategories.map((category) => (
@@ -48,62 +55,72 @@ const allCategories = [
 					}
 				</div>
 
-				<!-- 文章列表 -->
+				<!-- 文章列表 - 每行5个 -->
 				<div
-					class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+					class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
 				>
 					{
-						posts.map((post) => (
+						paginatedPosts.map((post) => (
 							<article
-								class="post-card"
+								class="post-card group"
 								data-category={post.data.category || "未分类"}
 							>
-								<a href={`/blog/${post.id}/`} class="block">
+								<a
+									href={`/blog/${post.id}/`}
+									class="block h-full"
+								>
 									{post.data.heroImage && (
-										<img
-											src={post.data.heroImage.src}
-											alt=""
-											class="w-full h-48 object-cover rounded-t-lg"
-										/>
+										<div class="aspect-video overflow-hidden rounded-t-lg">
+											<img
+												src={post.data.heroImage.src}
+												alt={post.data.title}
+												class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+											/>
+										</div>
 									)}
-									<div class="p-6">
-										<div class="post-meta mb-2 text-sm text-gray-600">
-											<span class="category">
+									<div class="p-4 flex flex-col h-full">
+										<div class="post-meta mb-2 text-xs text-gray-500 dark:text-gray-400">
+											<span class="category bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-xs">
 												{post.data.category || "未分类"}
 											</span>
-											<span class="mx-2">•</span>
+										</div>
+										<h2 class="title text-lg font-bold mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+											{post.data.title}
+										</h2>
+										<p class="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-3 flex-grow">
+											{post.data.description}
+										</p>
+										<div class="mt-auto">
 											<FormattedDate
 												date={post.data.pubDate}
 											/>
 										</div>
-										<h2 class="title text-xl font-bold mb-3">
-											{post.data.title}
-										</h2>
-										<p class="text-gray-700 mb-4">
-											{post.data.description}
-										</p>
-										<div class="read-more text-accent font-medium">
-											阅读更多 →
-										</div>
-
-										{post.data.tags &&
-											post.data.tags.length > 0 && (
-												<div class="mt-4 flex flex-wrap gap-2">
-													{post.data.tags.map(
-														(tag: string) => (
-															<span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
-																{tag}
-															</span>
-														),
-													)}
-												</div>
-											)}
 									</div>
 								</a>
 							</article>
 						))
 					}
 				</div>
+
+				<!-- 如果没有文章 -->
+				{
+					paginatedPosts.length === 0 && (
+						<div class="text-center py-12">
+							<div class="text-6xl mb-4">📝</div>
+							<h3 class="text-xl font-semibold mb-2">暂无文章</h3>
+							<p class="text-gray-600 dark:text-gray-400">
+								还没有发布任何博客文章
+							</p>
+						</div>
+					)
+				}
+
+				<!-- 分页组件 -->
+				{
+					pagination.totalPages > 1 && (
+						<Pagination pagination={pagination} basePath="/blog" />
+					)
+				}
 			</div>
 		</section>
 	</main>

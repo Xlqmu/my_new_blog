@@ -1,0 +1,275 @@
+---
+import { getCollection } from "astro:content";
+import FormattedDate from "../../../components/FormattedDate.astro";
+import Pagination from "../../../components/Pagination.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { paginate } from "../../../utils/pagination.ts";
+import { SITE_DESCRIPTION } from "../../../consts";
+
+export async function getStaticPaths() {
+    const posts = (await getCollection("blog")).sort(
+        (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+    );
+
+    const postsPerPage = 5;
+    const totalPages = Math.ceil(posts.length / postsPerPage);
+
+    return Array.from({ length: totalPages }, (_, i) => ({
+        params: { page: (i + 1).toString() },
+        props: { posts, currentPage: i + 1, totalPages },
+    }));
+}
+
+const { posts, currentPage, totalPages } = Astro.props;
+const { items: paginatedPosts, pagination } = paginate(posts, currentPage, 5);
+
+// 获取所有分类
+const allCategories = [
+    ...new Set(posts.map((post) => post.data.category || "未分类")),
+];
+---
+
+<BaseLayout
+    title={`博客文章 - 第${currentPage}页`}
+    description={SITE_DESCRIPTION}
+>
+    <main>
+        <section class="blog-hero py-16 text-center">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl font-bold mb-4">博客文章</h1>
+                <p
+                    class="text-xl max-w-2xl mx-auto text-gray-600 dark:text-gray-300"
+                >
+                    我的所有博客文章合集 - 第 {currentPage} 页
+                </p>
+            </div>
+        </section>
+
+        <section class="blog-content py-10">
+            <div class="container mx-auto px-4">
+                <!-- 分类筛选 -->
+                <div
+                    class="category-filter mb-8 flex flex-wrap justify-center gap-4"
+                >
+                    <a
+                        href="/blog"
+                        class="category-link active"
+                        data-category="all">全部</a
+                    >
+                    {
+                        allCategories.map((category) => (
+                            <a
+                                href="#"
+                                class="category-link"
+                                data-category={category}
+                            >
+                                {category}
+                            </a>
+                        ))
+                    }
+                </div>
+
+                <!-- 文章列表 - 每行5个 -->
+                <!-- 文章列表 - 每行5个 -->
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
+                >
+                    {
+                        paginatedPosts.map((post) => (
+                            <article
+                                class="post-card group"
+                                data-category={post.data.category || "未分类"}
+                            >
+                                <a
+                                    href={`/blog/${post.id}/`}
+                                    class="block h-full"
+                                >
+                                    {post.data.heroImage && (
+                                        <div class="aspect-video overflow-hidden rounded-t-lg">
+                                            <img
+                                                src={post.data.heroImage.src}
+                                                alt={post.data.title}
+                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                            />
+                                        </div>
+                                    )}
+                                    <div class="p-4 flex flex-col h-full">
+                                        <div class="post-meta mb-2 text-xs text-gray-500 dark:text-gray-400">
+                                            <span class="category bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-xs">
+                                                {post.data.category || "未分类"}
+                                            </span>
+                                        </div>
+                                        <h2 class="title text-lg font-bold mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                            {post.data.title}
+                                        </h2>
+                                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-3 flex-grow">
+                                            {post.data.description}
+                                        </p>
+                                        <div class="mt-auto">
+                                            <FormattedDate
+                                                date={post.data.pubDate}
+                                            />
+                                        </div>
+                                    </div>
+                                </a>
+                            </article>
+                        ))
+                    }
+                </div>
+
+                <!-- 如果没有文章 -->
+                {
+                    paginatedPosts.length === 0 && (
+                        <div class="text-center py-12">
+                            <div class="text-6xl mb-4">📝</div>
+                            <h3 class="text-xl font-semibold mb-2">暂无文章</h3>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                还没有发布任何博客文章
+                            </p>
+                        </div>
+                    )
+                }
+
+                <!-- 分页组件 -->
+                {
+                    pagination.totalPages > 1 && (
+                        <Pagination pagination={pagination} basePath="/blog" />
+                    )
+                }
+            </div>
+        </section>
+    </main>
+</BaseLayout>
+
+<style>
+    .category-link {
+        @apply px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-blue-500 hover:text-blue-500 transition-colors;
+    }
+
+    .category-link.active {
+        @apply bg-blue-500 text-white border-blue-500;
+    }
+
+    .post-card {
+        @apply bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700 overflow-hidden;
+    }
+
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    // 分类筛选功能
+    document.addEventListener("DOMContentLoaded", function () {
+        const categoryLinks = document.querySelectorAll(".category-link");
+        const postCards = document.querySelectorAll(".post-card");
+
+        categoryLinks.forEach((link) => {
+            link.addEventListener("click", function (e) {
+                const linkElement = e.target as HTMLElement;
+                if (!linkElement.getAttribute("href")?.startsWith("/")) {
+                    e.preventDefault();
+                }
+
+                // 更新激活状态
+                categoryLinks.forEach((l) => l.classList.remove("active"));
+                linkElement.classList.add("active");
+
+                const selectedCategory =
+                    linkElement.getAttribute("data-category");
+
+                // 筛选文章
+                postCards.forEach((card) => {
+                    const cardElement = card as HTMLElement;
+                    const cardCategory =
+                        cardElement.getAttribute("data-category");
+                    if (
+                        selectedCategory === "all" ||
+                        cardCategory === selectedCategory
+                    ) {
+                        cardElement.style.display = "block";
+                    } else {
+                        cardElement.style.display = "none";
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<!-- 如果没有文章 -->
+{
+    paginatedPosts.length === 0 && (
+        <div class="text-center py-12">
+            <div class="text-6xl mb-4">📝</div>
+            <h3 class="text-xl font-semibold mb-2">暂无文章</h3>
+            <p class="text-gray-600 dark:text-gray-400">
+                还没有发布任何博客文章
+            </p>
+        </div>
+    )
+}
+
+<!-- 分页组件 -->
+{totalPages > 1 && <Pagination pagination={pagination} basePath="/blog" />}
+
+<style>
+    .blog-hero {
+        background: linear-gradient(
+            to bottom,
+            rgba(59, 130, 246, 0.1),
+            rgba(255, 255, 255, 0.05)
+        );
+    }
+
+    .dark .blog-hero {
+        background: linear-gradient(
+            to bottom,
+            rgba(59, 130, 246, 0.2),
+            rgba(0, 0, 0, 0.1)
+        );
+    }
+
+    .category-link {
+        @apply px-4 py-2 rounded-lg transition-colors duration-200;
+        @apply bg-gray-100 hover:bg-gray-200 text-gray-700;
+        @apply dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-300;
+        text-decoration: none;
+    }
+
+    .category-link.active {
+        @apply bg-blue-500 text-white;
+        @apply dark:bg-blue-600;
+    }
+
+    .post-card {
+        @apply bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300;
+        @apply border border-gray-200 dark:border-gray-700;
+        overflow: hidden;
+    }
+
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>

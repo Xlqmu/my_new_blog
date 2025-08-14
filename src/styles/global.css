@@ -19,6 +19,13 @@
 	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
 	--box-shadow:
 		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%), 0 16px 32px rgba(var(--gray), 33%);
+
+	/* 动态布局变量 */
+	--dynamic-content-width: 85vw;
+	--dynamic-wide-width: 90vw;
+	--dynamic-narrow-width: 80vw;
+	--dynamic-section-spacing: 3rem;
+	--dynamic-card-gap: 1.5rem;
 }
 
 /* 暗模式变量 */
@@ -94,17 +101,17 @@ body::before {
 
 /* 为主要内容区域添加半透明背景 */
 main {
-	width: 720px;
+	width: min(90vw, 1400px);
 	max-width: calc(100% - 2em);
 	margin: auto;
-	padding: 3em 1em;
+	padding: clamp(1.5em, 4vw, 3em) clamp(1em, 3vw, 2em);
 }
 
 main {
-	width: 720px;
+	width: min(90vw, 1400px);
 	max-width: calc(100% - 2em);
 	margin: auto;
-	padding: 3em 1em;
+	padding: clamp(1.5em, 4vw, 3em) clamp(1em, 3vw, 2em);
 }
 
 h1,
