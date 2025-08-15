@@ -3,52 +3,45 @@ title: '我的第一篇技术博客'
 description: '分享学习 Web 开发的心得体会'
 pubDate: '2025-08-14'
 heroImage: '../../assets/cover.svg'
-category: '技术分享'
-series: 'Web开发入门'
-tags: ['Web开发', 'JavaScript', '学习笔记']
+category: ''
+series: ''
+tags: ['Ros', '后端', '学习笔记']
 ---
 
 这是我用 Markdown 写的第一篇博客文章！
 
-## 为什么选择 Web 开发？
+## 为什么选择 Astro？
 
-Web 开发是一个充满活力和创新的领域...
+因为看到Astro的现代化框架强迫症犯了...
 
 ### 主要学习内容
 
-1. **前端技术栈**
-   - HTML/CSS
-   - JavaScript/TypeScript
-   - Vue.js/React
+介绍介绍我在做什么吧
+
+1. **机器人技术栈**
+   - cv
+   - Ros2(jazzy)
+   - slam
 
 2. **后端技术**
-   - Node.js
-   - 数据库设计
-
-### 代码示例
-
-```javascript
-// 这是一个简单的 JavaScript 函数
-function greetUser(name) {
-    return `Hello, ${name}! 欢迎来到我的博客！`;
-}
-
-console.log(greetUser('朋友'));
-```
+   - Rust 开发
+   - C++ 开发
+   - Golang 开发
 
 ## 学习心得
 
-通过这段时间的学习，我发现...
+通过近两年的学习，我发现自己本身对于理论知识的困乏以及渴望？所以希望借着重构自己blog网站的同时能够沉淀理论，真正做到理论与实践相结合。
 
 ### 下一步计划
 
-- [ ] 深入学习 TypeScript
-- [ ] 掌握数据库操作
-- [ ] 构建完整的项目
+- [ ] 积极学习 AI领域的知识
+- [ ] 不断丰富自己的知识库
+- [ ] 提高码技
+- [ ] 学点算法
 
 ## 总结
 
-学习是一个持续的过程，期待与大家分享更多内容！
+学习是一个持续的过程，继续努力鸭！
 
 ---
 
