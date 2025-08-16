@@ -32,18 +32,109 @@ const posts = (await getCollection("blog"))
 					</a>
 				</div>
 			</DynamicContainer>
-			<div class="kawaii-mascot">🌸</div>
+			<div class="kawaii-mascot">
+				<svg
+					viewBox="0 0 120 120"
+					width="80"
+					height="80"
+					style="display:block;margin:auto;animation:doro-head 2s infinite alternate;"
+				>
+					<!-- Doro头部 -->
+					<ellipse
+						cx="60"
+						cy="70"
+						rx="35"
+						ry="32"
+						fill="#fffbe6"
+						stroke="#333"
+						stroke-width="2"></ellipse>
+					<!-- Doro耳朵 -->
+					<ellipse
+						cx="30"
+						cy="40"
+						rx="10"
+						ry="18"
+						fill="#fffbe6"
+						stroke="#333"
+						stroke-width="2"></ellipse>
+					<ellipse
+						cx="90"
+						cy="40"
+						rx="10"
+						ry="18"
+						fill="#fffbe6"
+						stroke="#333"
+						stroke-width="2"></ellipse>
+					<!-- Doro脸部阴影 -->
+					<ellipse
+						cx="60"
+						cy="80"
+						rx="28"
+						ry="18"
+						fill="#f7e6c7"
+						opacity="0.5"></ellipse>
+					<!-- Doro眼睛 -->
+					<ellipse
+						cx="48"
+						cy="80"
+						rx="6"
+						ry="8"
+						fill="#fff"
+						stroke="#333"
+						stroke-width="1"></ellipse>
+					<ellipse
+						cx="72"
+						cy="80"
+						rx="6"
+						ry="8"
+						fill="#fff"
+						stroke="#333"
+						stroke-width="1"></ellipse>
+					<ellipse cx="48" cy="82" rx="2" ry="3" fill="#333"
+					></ellipse>
+					<ellipse cx="72" cy="82" rx="2" ry="3" fill="#333"
+					></ellipse>
+					<!-- Doro嘴巴 -->
+					<path
+						d="M56 95 Q60 100 64 95"
+						stroke="#333"
+						stroke-width="2"
+						fill="none"></path>
+					<!-- Doro腮红 -->
+					<ellipse
+						cx="40"
+						cy="90"
+						rx="4"
+						ry="2"
+						fill="#f7b3b3"
+						opacity="0.7"></ellipse>
+					<ellipse
+						cx="80"
+						cy="90"
+						rx="4"
+						ry="2"
+						fill="#f7b3b3"
+						opacity="0.7"></ellipse>
+					<!-- Doro标志性呆毛 -->
+					<path
+						d="M60 38 Q62 30 66 38"
+						stroke="#333"
+						stroke-width="2"
+						fill="none"></path>
+				</svg>
+			</div>
 		</section>
 
 		<!-- 最新博客文章 -->
-		<section class="mb-12">
+		<section class="mb-12 pt-20">
 			<DynamicContainer size="content">
-				<h2 class="text-3xl font-bold mb-8 text-center">
+				<h2
+					class="text-3xl font-bold mb-8 text-center pt-4 leading-relaxed"
+				>
 					<span
-						class="bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent"
+						class="bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent inline-block py-2"
+						>✨ 最新文章 ✨</span
 					>
-						✨ 最新文章 ✨
-					</span>
 				</h2>
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 					{
@@ -71,14 +162,13 @@ const posts = (await getCollection("blog"))
 		</section>
 
 		<!-- 技术栈展示 -->
-		<section class="mb-12">
+		<section class="mb-12 pt-20">
 			<DynamicContainer size="wide">
 				<h2 class="text-3xl font-bold mb-8 text-center">
 					<span
-						class="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent"
+						class="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent inline-block py-2"
+						>🛠️ 技术栈 🛠️</span
 					>
-						🛠️ 技术栈 🛠️
-					</span>
 				</h2>
 				<div
 					class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6"
@@ -461,13 +551,15 @@ const posts = (await getCollection("blog"))
 		z-index: 10;
 	}
 
-	@keyframes float {
-		0%,
-		100% {
-			transform: translateY(0px);
+	@keyframes doro-head {
+		0% {
+			transform: translateY(0) rotate(-6deg);
 		}
 		50% {
-			transform: translateY(-10px);
+			transform: translateY(-8px) rotate(6deg);
+		}
+		100% {
+			transform: translateY(0) rotate(-6deg);
 		}
 	}
 
