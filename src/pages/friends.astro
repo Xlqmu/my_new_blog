@@ -16,172 +16,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             </p>
         </div>
 
-        <!-- 友链申请说明 -->
-        <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6 mb-8">
-            <h2
-                class="text-xl font-semibold text-blue-900 dark:text-blue-100 mb-3"
-            >
-                友链申请
-            </h2>
-            <div class="text-blue-800 dark:text-blue-200 space-y-2">
-                <p><strong>申请要求：</strong></p>
-                <ul class="list-disc list-inside space-y-1 ml-4">
-                    <li>网站内容健康，无违法违规信息</li>
-                    <li>有一定的原创内容</li>
-                    <li>网站稳定可访问</li>
-                    <li>优先考虑技术类、学习类博客</li>
-                </ul>
-                <p class="mt-3">
-                    <strong>申请方式：</strong>请通过邮件或GitHub
-                    Issue联系我，并提供以下信息：
-                </p>
-                <ul class="list-disc list-inside space-y-1 ml-4">
-                    <li>网站名称</li>
-                    <li>网站链接</li>
-                    <li>网站描述（一句话简介）</li>
-                    <li>站长昵称</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- 友链列表 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- 示例友链卡片 -->
-            <div
-                class="friend-card rounded-lg shadow-md hover:shadow-lg transition-shadow p-6"
-            >
-                <div class="flex items-center mb-4">
-                    <div
-                        class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg"
-                    >
-                        示
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="font-semibold text-gray-900 dark:text-white">
-                            示例博客
-                        </h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">
-                            博主昵称
-                        </p>
-                    </div>
-                </div>
-                <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                    这是一个示例友链的描述，展示了网站的主要内容和特色。
-                </p>
-                <a
-                    href="#"
-                    class="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    访问网站
-                    <svg
-                        class="ml-1 w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                        ></path>
-                    </svg>
-                </a>
-            </div>
-
-            <!-- 技术分享站 -->
-            <div
-                class="friend-card rounded-lg shadow-md hover:shadow-lg transition-shadow p-6"
-            >
-                <div class="flex items-center mb-4">
-                    <div
-                        class="w-12 h-12 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center text-white font-bold text-lg"
-                    >
-                        T
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="font-semibold text-gray-900 dark:text-white">
-                            技术分享站
-                        </h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">
-                            TechBlogger
-                        </p>
-                    </div>
-                </div>
-                <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                    专注于前端技术分享，Vue.js、React、TypeScript等现代前端技术栈。
-                </p>
-                <a
-                    href="#"
-                    class="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    访问网站
-                    <svg
-                        class="ml-1 w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                        ></path>
-                    </svg>
-                </a>
-            </div>
-
-            <!-- 开源项目集 -->
-            <div
-                class="friend-card rounded-lg shadow-md hover:shadow-lg transition-shadow p-6"
-            >
-                <div class="flex items-center mb-4">
-                    <div
-                        class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center text-white font-bold text-lg"
-                    >
-                        开
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="font-semibold text-gray-900 dark:text-white">
-                            开源项目集
-                        </h3>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">
-                            OpenSourceDev
-                        </p>
-                    </div>
-                </div>
-                <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                    收集和分享优秀的开源项目，帮助开发者发现有用的工具和库。
-                </p>
-                <a
-                    href="#"
-                    class="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    访问网站
-                    <svg
-                        class="ml-1 w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                        ></path>
-                    </svg>
-                </a>
-            </div>
-        </div>
-
         <!-- 申请友链按钮 -->
         <div class="text-center mt-12">
             <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-8">
@@ -214,7 +48,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                         邮件申请
                     </a>
                     <a
-                        href="https://github.com/yourusername/your-repo/issues"
+                        href="https://github.com/Xlqmu/my_new_blog/issues"
                         class="inline-flex items-center justify-center px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition-colors"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -234,17 +68,17 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             </div>
         </div>
     </main>
+
+    <style>
+        .friend-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        :global(.dark) .friend-card {
+            background: rgba(31, 41, 55, 0.9);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+    </style>
 </BaseLayout>
-
-<style>
-    .friend-card {
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    :global(.dark) .friend-card {
-        background: rgba(31, 41, 55, 0.9);
-        border: 1px solid rgba(75, 85, 99, 0.3);
-    }
-</style>
